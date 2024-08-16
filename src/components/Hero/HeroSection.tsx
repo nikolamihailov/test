@@ -21,9 +21,9 @@ function HeroSection() {
 
           <Button
             bgColor={theme.palette.primary.main}
-            color="#fff"
+            color={theme.palette.secondary.main}
             el="link"
-            hoverBgColor="#fff"
+            hoverBgColor={theme.palette.secondary.main}
             hoverColor="#000"
             href="/services"
           >
@@ -31,9 +31,9 @@ function HeroSection() {
           </Button>
           <Button
             bgColor="#e67700"
-            color="#fff"
+            color={theme.palette.secondary.main}
             el="link"
-            hoverBgColor="#fff"
+            hoverBgColor={theme.palette.secondary.main}
             hoverColor="#000"
             href="/appointments"
           >
