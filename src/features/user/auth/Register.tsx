@@ -15,10 +15,12 @@ import { AppRegistrationOutlined, Visibility, VisibilityOff } from "@mui/icons-m
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Section from "../../../components/UI/Section/Section";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useTitle from "../../../hooks/useTitle";
 import { useRegister } from "../../../hooks/users/useRegister";
 import { User } from "../../../types/User";
+import { toast } from "react-toastify";
+import { boxSX, sectionStyles } from "../../../utils/StylesHelper/LoginRegister";
 
 function Register() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -39,43 +41,28 @@ function Register() {
 
   const { mutateAsync } = useRegister();
   const theme = useTheme();
+  const navigateTo = useNavigate();
 
   useTitle("Register | Flow - SPA and Fitness");
 
   const onSubmit = async (data: User) => {
-    await mutateAsync(data);
+    mutateAsync(data)
+      .then((data) => {
+        toast.success(`User ${data.email} created!`);
+        navigateTo("/login");
+      })
+      .catch((error) => {
+        if (error?.response?.status === 409) {
+          toast.error("Email is already used!");
+        } else {
+          toast.error("Something went wrong");
+        }
+      });
   };
 
   return (
-    <Section
-      bgColor="#ffe066"
-      style={{
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "4.8rem 0.8rem",
-      }}
-    >
-      <Box
-        sx={{
-          width: {
-            xs: "100%",
-            sm: "80vw",
-            md: "80rem",
-          },
-          margin: "auto",
-          padding: 4,
-          border: "1px solid #ccc",
-          borderRadius: "1rem",
-          boxShadow: "0 0 16px rgba(0, 0, 0, 0.1)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 3,
-          bgcolor: theme.palette.secondary.main,
-        }}
-      >
+    <Section bgColor="#ffe066" style={sectionStyles}>
+      <Box sx={boxSX(theme, true)}>
         <Typography variant="h4" component="h1" gutterBottom>
           Register
         </Typography>

@@ -17,8 +17,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLogin } from "../../../hooks/users/useLogin";
 import useTitle from "../../../hooks/useTitle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Section from "../../../components/UI/Section/Section";
+import { boxSX, sectionStyles } from "../../../utils/StylesHelper/LoginRegister";
+import { toast } from "react-toastify";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -33,44 +36,32 @@ function Login() {
     },
   });
   const { mutateAsync, isPending } = useLogin();
+  const { loginUser } = useAuth();
   const theme = useTheme();
+  const navigateTo = useNavigate();
 
   useTitle("Login | Flow - SPA and Fitness");
 
   const onSubmit = async (data: { email: string; password: string }) => {
-    await mutateAsync(data);
+    mutateAsync(data)
+      .then((data) => {
+        loginUser(data.token);
+        toast.success("Login successful!");
+        const redirectPath = new URLSearchParams(location.search).get("continue") || "/home";
+        navigateTo(redirectPath);
+      })
+      .catch((error) => {
+        if (error?.response?.status === 400 || error.response?.status === 403) {
+          toast.error("Email or password is invalid");
+        } else {
+          toast.error("Something went wrong");
+        }
+      });
   };
 
   return (
-    <Section
-      bgColor="#ffe066"
-      style={{
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "4.8rem 0.8rem",
-      }}
-    >
-      <Box
-        sx={{
-          width: {
-            xs: "100%",
-            sm: "40rem",
-          },
-          margin: "auto",
-          padding: 4,
-          marginTop: "4.8rem",
-          border: "1px solid #ccc",
-          borderRadius: "1rem",
-          boxShadow: "0 0 16px rgba(0, 0, 0, 0.1)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 3,
-          bgcolor: theme.palette.secondary.main,
-        }}
-      >
+    <Section bgColor="#ffe066" style={sectionStyles}>
+      <Box sx={boxSX(theme, false)}>
         <Typography variant="h4" component="h1" gutterBottom>
           Login
         </Typography>
