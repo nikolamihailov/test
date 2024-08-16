@@ -1,21 +1,29 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { Box, Drawer, IconButton, useTheme } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Box, Button, Drawer, IconButton, useTheme } from "@mui/material";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import logo from "/logo.png";
 import styles from "./MobileNav.module.css";
+import { logoutBtnSX } from "../../../utils/StylesHelper/LogoutBtn";
 
 function MobileNav() {
   const [open, setOpen] = useState<boolean>(false);
   const { isAuthenticated, logoutUser } = useAuth();
   const theme = useTheme();
+  const navigateTo = useNavigate();
 
-  const handleCloseDrawer = () => {
+  const handleCloseDrawer = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
+
+  const handleLogout = useCallback(() => {
+    logoutUser();
+    handleCloseDrawer();
+    navigateTo("/");
+  }, [logoutUser, handleCloseDrawer, navigateTo]);
 
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -73,15 +81,9 @@ function MobileNav() {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={"/"}
-                    onClick={() => {
-                      logoutUser();
-                      handleCloseDrawer();
-                    }}
-                  >
+                  <Button onClick={handleLogout} color="primary" sx={logoutBtnSX}>
                     Logout
-                  </NavLink>
+                  </Button>
                 </li>
               </>
             )}
