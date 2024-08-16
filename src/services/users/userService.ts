@@ -18,5 +18,5 @@ export const login = async ({ email, password }: { email: string; password: stri
 };
 
 export const register = async (userData: User) => {
-  return (await axios.post(userEndpoints.register, { ...userData })).data;
+  return (await axios.post(userEndpoints.register, userData)).data;
 };
