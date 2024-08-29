@@ -1,4 +1,6 @@
-export const logoutBtnSX = {
+import { Theme } from "@mui/material";
+
+export const logoutBtnSX = (theme: Theme) => ({
   textDecoration: "none",
   fontSize: "2rem",
   fontWeight: 700,
@@ -7,6 +9,6 @@ export const logoutBtnSX = {
   padding: 0,
   "&:hover": {
     backgroundColor: "transparent",
-    color: "#ffe066",
+    color: theme.palette.secondary.dark,
   },
-};
+});

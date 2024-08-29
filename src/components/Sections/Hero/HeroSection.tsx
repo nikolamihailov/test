@@ -1,15 +1,15 @@
-import Button from "../UI/Button/Button";
-import Section from "../UI/Section/Section";
+import Button from "../../UI/Button/Button";
+import Section from "../../UI/Section/Section";
 import GroupAvatars from "./GroupAvatars/GroupAvatars";
 import heroImg from "/hero-img.jpg";
 import styles from "./Hero.module.css";
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 function HeroSection() {
   const theme = useTheme();
 
   return (
-    <Section bgColor="#ffe066">
+    <Section bgColor={theme.palette.secondary.dark}>
       <div className={styles["hero"]}>
         <div className={styles["text-box"]}>
           <h1>Welcome to Your Ultimate Wellness Retreat</h1>
@@ -18,27 +18,28 @@ function HeroSection() {
             rejuvenate your mind, body, and spirit in our serene oasis. Embrace tranquility and
             wellness with our personalized treatments and fitness programs.
           </p>
-
-          <Button
-            bgColor={theme.palette.primary.main}
-            color={theme.palette.secondary.main}
-            el="link"
-            hoverBgColor={theme.palette.secondary.main}
-            hoverColor="#000"
-            href="/services"
-          >
-            Explore Services
-          </Button>
-          <Button
-            bgColor="#e67700"
-            color={theme.palette.secondary.main}
-            el="link"
-            hoverBgColor={theme.palette.secondary.main}
-            hoverColor="#000"
-            href="/appointments"
-          >
-            Make Appointment
-          </Button>
+          <Box>
+            <Button
+              bgColor={theme.palette.primary.main}
+              color={theme.palette.secondary.main}
+              el="link"
+              hoverBgColor={theme.palette.secondary.main}
+              hoverColor="#000"
+              href="/services"
+            >
+              Explore Services
+            </Button>
+            <Button
+              bgColor={theme.palette.primary.light}
+              color={theme.palette.secondary.main}
+              el="link"
+              hoverBgColor={theme.palette.secondary.main}
+              hoverColor="#000"
+              href="/appointments"
+            >
+              Make Appointment
+            </Button>
+          </Box>
           <div className={styles["happy-clients"]}>
             <GroupAvatars />
             <p className={styles["happy-clients-text"]}>

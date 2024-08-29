@@ -1,7 +1,7 @@
 import { ReactNode, CSSProperties } from "react";
 
 type SectionProps = {
-  bgColor?: string;
+  bgColor: string;
   children: ReactNode;
   id?: string;
   style?: CSSProperties;

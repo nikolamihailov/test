@@ -19,7 +19,12 @@ import { useLogin } from "../../../hooks/users/useLogin";
 import useTitle from "../../../hooks/useTitle";
 import { Link, useNavigate } from "react-router-dom";
 import Section from "../../../components/UI/Section/Section";
-import { boxSX, sectionStyles } from "../../../utils/StylesHelper/LoginRegister";
+import {
+  boxSX,
+  buttonSX,
+  loginFormSX,
+  sectionStyles,
+} from "../../../utils/StylesHelper/LoginRegister";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../contexts/AuthContext";
 
@@ -60,20 +65,12 @@ function Login() {
   };
 
   return (
-    <Section bgColor="#ffe066" style={sectionStyles}>
+    <Section bgColor={theme.palette.secondary.dark} style={sectionStyles}>
       <Box sx={boxSX(theme, false)}>
         <Typography variant="h4" component="h1" gutterBottom>
           Login
         </Typography>
-        <form
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "2.4rem",
-          }}
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <Box component="form" sx={loginFormSX} onSubmit={handleSubmit(onSubmit)}>
           <TextField
             id="input-email"
             label="Email"
@@ -127,15 +124,11 @@ function Login() {
             startIcon={<LoginRounded />}
             type="submit"
             size="medium"
-            sx={{
-              padding: "1rem",
-              bgcolor: theme.palette.primary.main,
-              ":hover": { bgcolor: "#572000" },
-            }}
+            sx={buttonSX(theme, false)}
           >
             {isPending ? <CircularProgress size={24} color="inherit" /> : "Log-in"}
           </Button>
-        </form>
+        </Box>
       </Box>
     </Section>
   );

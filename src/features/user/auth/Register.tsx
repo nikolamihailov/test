@@ -20,7 +20,12 @@ import useTitle from "../../../hooks/useTitle";
 import { useRegister } from "../../../hooks/users/useRegister";
 import { User } from "../../../types/User";
 import { toast } from "react-toastify";
-import { boxSX, sectionStyles } from "../../../utils/StylesHelper/LoginRegister";
+import {
+  boxSX,
+  buttonSX,
+  registerFormSX,
+  sectionStyles,
+} from "../../../utils/StylesHelper/LoginRegister";
 
 function Register() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -61,25 +66,12 @@ function Register() {
   };
 
   return (
-    <Section bgColor="#ffe066" style={sectionStyles}>
+    <Section bgColor={theme.palette.secondary.dark} style={sectionStyles}>
       <Box sx={boxSX(theme, true)}>
         <Typography variant="h4" component="h1" gutterBottom>
           Register
         </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{
-            width: "100%",
-            display: "grid",
-            gap: "2.4rem",
-            alignItems: "center",
-            gridTemplateColumns: {
-              sm: "1fr",
-              md: "repeat(2, minmax(0, 1fr))",
-            },
-          }}
-        >
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={registerFormSX}>
           <TextField
             id="input-email"
             label="Email"
@@ -226,12 +218,7 @@ function Register() {
             startIcon={<AppRegistrationOutlined />}
             type="submit"
             size="medium"
-            sx={{
-              padding: "1rem",
-              gridColumn: "1/-1",
-              bgcolor: theme.palette.primary.main,
-              ":hover": { bgcolor: "#572000" },
-            }}
+            sx={buttonSX(theme, true)}
           >
             Register
           </Button>

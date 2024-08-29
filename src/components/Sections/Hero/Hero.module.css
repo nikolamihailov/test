@@ -22,15 +22,18 @@
 .text-box {
   color: var(--color-primary-main);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3.6rem;
 }
 
 .text-box a:link {
   display: inline-block;
   margin: 1.6rem 1.6rem 0 0;
 }
+
 .text-box h1 {
   font-size: 4.4rem;
-  margin-bottom: 3.4rem;
   line-height: 1.1;
   font-weight: 700;
   letter-spacing: -1px;
@@ -39,7 +42,6 @@
 .text-box .desc {
   font-size: 2rem;
   line-height: 1.6;
-  margin-bottom: 3.4rem;
 }
 
 .img-box {
@@ -52,7 +54,6 @@
   display: flex;
   align-items: center;
   gap: 1.6rem;
-  margin-top: 3.4rem;
 }
 
 .happy-clients-text {
@@ -87,9 +88,11 @@
     text-align: center;
     width: 100%;
   }
+
   .happy-clients {
     flex-direction: column;
   }
+
   .img-box img {
     width: 100%;
   }
