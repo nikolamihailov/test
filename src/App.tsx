@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthProvider } from "./contexts/AuthContext";
 import generateCssVariables from "./utils/ThemeColors/generateColors";
+import ScrollTop from "./components/UI/ScrollToTop/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -15,9 +16,13 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#8B0401",
+      light: "#e67700",
+      dark: "#572000",
     },
     secondary: {
       main: "#FFF",
+      light: "#ffe6bd",
+      dark: "#ffe066",
     },
   },
 });
@@ -30,6 +35,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <RouterProvider router={appRouter} />
+          <ScrollTop />
         </AuthProvider>
       </ThemeProvider>
       <ReactQueryDevtools />
