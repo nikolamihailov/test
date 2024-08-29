@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { Button } from "@mui/material";
+import { Button, useTheme } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "./Logo/Logo";
 import logo from "/logo.png";
@@ -10,6 +10,7 @@ import { logoutBtnSX } from "../../utils/StylesHelper/LogoutBtn";
 function AuthenticatedNav() {
   const { logoutUser } = useAuth();
   const naviagetTo = useNavigate();
+  const theme = useTheme();
 
   const handleLogout = useCallback(() => {
     logoutUser();
@@ -22,7 +23,7 @@ function AuthenticatedNav() {
         <NavLink to="/#about">About us</NavLink>
       </li>
       <li>
-        <NavLink to="/#contact">Contact</NavLink>
+        <NavLink to="/#contact">Contact us</NavLink>
       </li>
       <li>
         <NavLink to="/services" className={({ isActive }) => (isActive ? styles["active"] : "")}>
@@ -30,7 +31,7 @@ function AuthenticatedNav() {
         </NavLink>
       </li>
       <li>
-        <NavLink to={"/"}>
+        <NavLink to={"/home"}>
           <Logo src={logo} width={60} />
         </NavLink>
       </li>
@@ -48,7 +49,7 @@ function AuthenticatedNav() {
         </NavLink>
       </li>
       <li>
-        <Button onClick={handleLogout} color="secondary" sx={logoutBtnSX}>
+        <Button onClick={handleLogout} color="secondary" sx={logoutBtnSX(theme)}>
           Logout
         </Button>
       </li>

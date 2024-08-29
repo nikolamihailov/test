@@ -4,9 +4,9 @@ import { Box } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import MobileNav from "./MobileNav/MobileNav";
-import styles from "./Navigation.module.css";
 import AuthenticatedNav from "./AuthenticatedNav";
 import UnauthenticatedNav from "./UnAuthenticatedNav";
+import styles from "./Navigation.module.css";
 
 function Navigation() {
   const theme = useTheme();
