@@ -13,7 +13,7 @@ export const boxSx: SxProps = {
   gap: "6.4rem",
   width: {
     sm: "100%",
-    md: "75rem",
+    md: "80rem",
   },
 };
 
@@ -21,14 +21,14 @@ export const oddStepSx: SxProps = {
   display: "flex",
   flexDirection: "column",
   gap: "3.2rem",
-  textAlign: { xs: "center", sm: "left" },
+  textAlign: { xs: "center", sm: "center", md: "left" },
 };
 
 export const evenStepSx: SxProps = {
   display: "flex",
   flexDirection: "column",
   gap: "3.2rem",
-  textAlign: { xs: "center", sm: "right" },
+  textAlign: { xs: "center", sm: "center", md: "right" },
 };
 
 export const stepIconSx = (theme: Theme): SxProps => ({
