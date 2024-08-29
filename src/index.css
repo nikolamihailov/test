@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-color: var(--color-secondary-main) var(--color-primary-dark);
+  scrollbar-width: thin;
 }
 
 html {
@@ -39,7 +41,7 @@ main {
   display: block;
   font-size: 1.6rem;
   font-weight: 500;
-  color: #cf711f;
+  color: var(--color-primary-light);
   text-transform: uppercase;
   margin-bottom: 1.6rem;
   letter-spacing: 0.75px;
@@ -48,5 +50,22 @@ main {
 .heading-secondary {
   font-size: 4.4rem;
   line-height: 1.2;
-  margin-bottom: 4.8rem;
+  /*   margin-bottom: 4.8rem; */
+}
+
+@media only screen and (max-width: 480px) {
+  .heading-primary {
+    font-size: 4.2rem;
+  }
+
+  .heading-secondary {
+    font-size: 3.6rem;
+  }
+
+  body .Toastify__toast-container {
+    width: auto;
+    padding: initial;
+    left: initial;
+    margin: initial;
+  }
 }
