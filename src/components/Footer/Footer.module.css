@@ -7,7 +7,7 @@
   padding: 1.6rem;
   margin-top: 0;
   width: 100%;
-  background-color: #e67700;
+  background-color: var(--color-primary-light);
   color: var(--color-secondary-main);
   gap: 1.6rem;
 }

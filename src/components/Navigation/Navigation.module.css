@@ -20,10 +20,10 @@
 }
 
 .main-nav a:hover {
-  color: #ffe066;
+  color: var(--color-secondary-dark);
 }
 
 .main-nav li a.active {
-  color: #ffe066 !important;
-  border-bottom: 3px solid #ffe066;
+  color: var(--color-secondary-dark) !important;
+  border-bottom: 3px solid var(--color-secondary-dark);
 }

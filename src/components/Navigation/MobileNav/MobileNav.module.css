@@ -19,5 +19,5 @@
 }
 
 .mobile-nav li a.active {
-  color: #ffe066 !important;
+  color: var(--color-secondary-dark) !important;
 }
