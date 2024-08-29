@@ -16,8 +16,8 @@ function HowItWorks() {
 
       <Box sx={boxSx}>
         <Box sx={oddStepSx}>
-          <Typography variant="h5">1. Pick a Service</Typography>
-          <Typography variant="body1">
+          <Typography variant="h4">1. Pick a Service</Typography>
+          <Typography variant="body1" sx={{ fontSize: "1.8rem" }}>
             Browse through our wide range of wellness services, each designed to meet your specific
             needs. Whether you're looking for a relaxing spa treatment, a rejuvenating massage, or a
             focused fitness program, take your time to explore all options and select the one that
@@ -34,8 +34,8 @@ function HowItWorks() {
           <SpecialistIcon sx={stepIconSx(theme)} />
         </Box>
         <Box sx={{ gridArea: { sx: "text", sm: "text", md: "text" }, ...evenStepSx }}>
-          <Typography variant="h5">2. Choose Your Specialist</Typography>
-          <Typography variant="body1">
+          <Typography variant="h4">2. Choose Your Specialist</Typography>
+          <Typography variant="body1" sx={{ fontSize: "1.8rem" }}>
             After selecting your desired service, it's time to choose the professional who will
             guide you through it. Each of our specialists has a unique set of skills and expertise.
             Read through their profiles, consider their specialties, and choose the one who best
@@ -46,8 +46,8 @@ function HowItWorks() {
 
       <Box sx={boxSx}>
         <Box sx={oddStepSx}>
-          <Typography variant="h5">3. Confirm and Schedule</Typography>
-          <Typography variant="body1">
+          <Typography variant="h4">3. Confirm and Schedule</Typography>
+          <Typography variant="body1" sx={{ fontSize: "1.8rem" }}>
             Once you've selected a service and a specialist, the final step is to choose a time that
             works for you. Our system will show you all available time slots. Simply select the one
             that fits your schedule, review all your choices, and confirm your appointment. You're
