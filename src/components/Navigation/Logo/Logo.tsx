@@ -2,6 +2,7 @@ type LogoProps = {
   width: number;
   src: string;
 };
+
 function Logo({ width, src }: LogoProps) {
   return (
     <>
