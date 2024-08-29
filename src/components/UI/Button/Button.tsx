@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode } from "react";
+import { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import stylesBtn from "./Button.module.css";
 
@@ -22,14 +22,17 @@ type LinksProps = {
   hoverColor?: string;
   href: string;
   children: ReactNode;
+  style?: CSSProperties;
 } & ComponentPropsWithoutRef<"a">;
 
 function Button(props: ButtonProps | LinksProps) {
-  const { el, type, bgColor, color, children, hoverBgColor, hoverColor, ...otherProps } = props;
+  const { el, type, bgColor, color, children, hoverBgColor, hoverColor, style, ...otherProps } =
+    props;
 
   const styles = {
     backgroundColor: bgColor,
     color: color,
+    ...style,
   };
 
   const className = `${stylesBtn["btn-link"]} ${stylesBtn[type ? type : "small"]}`;
