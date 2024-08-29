@@ -10,7 +10,7 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      toast.error("This path is not accessible. Please log in first.");
+      toast.error("Please, log in first to access.");
       setShouldRedirect(true);
     }
   }, [isAuthenticated]);
