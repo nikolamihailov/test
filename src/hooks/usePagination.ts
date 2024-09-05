@@ -1,4 +1,3 @@
-import { SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
 
 export const usePagination = (initialPage: number = 0, initialServicesPerPage: number = 4) => {
@@ -10,8 +9,8 @@ export const usePagination = (initialPage: number = 0, initialServicesPerPage: n
     window.scrollTo(0, 0);
   };
 
-  const handleItemsPerPageChange = (event: SelectChangeEvent<number>) => {
-    setItemsPerPage(event.target.value as number);
+  const handleItemsPerPageChange = (value: number) => {
+    setItemsPerPage(value);
     setPage(0);
   };
 

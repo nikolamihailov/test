@@ -3,7 +3,7 @@ import { selectSx } from "../../utils/StylesHelper/Pagination";
 
 type SelectProps = {
   itemsPerPage: number;
-  onItemsPerPageChange: (event: SelectChangeEvent<number>) => void;
+  onItemsPerPageChange: (value: number) => void;
   itemName: string;
 };
 
@@ -11,7 +11,8 @@ function SelectItemsPerPage({ itemsPerPage, onItemsPerPageChange, itemName }: Se
   const theme = useTheme();
 
   const handleItemsPerPageChange = (event: SelectChangeEvent<number>) => {
-    onItemsPerPageChange(event);
+    const selectedValue = Number(event.target.value);
+    onItemsPerPageChange(selectedValue);
   };
 
   return (
