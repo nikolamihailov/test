@@ -1,5 +1,5 @@
 import React from "react";
-import { Pagination } from "@mui/material";
+import { Pagination as MUIPagination } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { pagesSx } from "../../utils/StylesHelper/Pagination";
 
@@ -9,7 +9,7 @@ type PaginationProps = {
   onPageChange: (event: React.ChangeEvent<unknown>, value: number) => void;
 };
 
-function PaginationComp({ totalPages, page, onPageChange }: PaginationProps) {
+function Pagination({ totalPages, page, onPageChange }: PaginationProps) {
   const theme = useTheme();
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -20,7 +20,7 @@ function PaginationComp({ totalPages, page, onPageChange }: PaginationProps) {
   return (
     <>
       {totalPages > 1 && (
-        <Pagination
+        <MUIPagination
           count={totalPages}
           page={page + 1}
           onChange={handlePageChange}
@@ -32,4 +32,4 @@ function PaginationComp({ totalPages, page, onPageChange }: PaginationProps) {
   );
 }
 
-export default PaginationComp;
+export default Pagination;
