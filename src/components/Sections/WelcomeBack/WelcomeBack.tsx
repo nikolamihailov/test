@@ -3,14 +3,16 @@ import Section from "../../UI/Section/Section";
 import Button from "../../UI/Button/Button";
 import { welcomeSection } from "../../../utils/StylesHelper/Section";
 import { callToActionBtns } from "../../../utils/StylesHelper/WelcomeBack";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function WelcomeBack() {
+  const { user } = useAuth();
   const theme = useTheme();
 
   return (
     <Section bgColor={theme.palette.secondary.dark} id="welcome-back" style={welcomeSection(theme)}>
       <Typography variant="h4" sx={{ fontSize: "4rem" }}>
-        Welcome back, Koleto!
+        Welcome back, {user?.firstName}!
       </Typography>
       <Typography
         variant="body1"
