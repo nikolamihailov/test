@@ -11,7 +11,7 @@ import { logoutBtnSX } from "../../../utils/StylesHelper/LogoutBtn";
 
 function MobileNav() {
   const [open, setOpen] = useState<boolean>(false);
-  const { isAuthenticated, logoutUser } = useAuth();
+  const { isAuthenticated, logoutUser, user } = useAuth();
   const theme = useTheme();
   const navigateTo = useNavigate();
 
@@ -63,13 +63,20 @@ function MobileNav() {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={"/appointments"}
-                    className={({ isActive }) => (isActive ? styles["active"] : "")}
-                    onClick={handleCloseDrawer}
-                  >
-                    Appointments
-                  </NavLink>
+                  {user?.role === "ADMIN" && (
+                    <NavLink to={"/admin"} onClick={handleCloseDrawer}>
+                      Admin Panel
+                    </NavLink>
+                  )}
+                  {user?.role !== "ADMIN" && (
+                    <NavLink
+                      to={"/appointments"}
+                      className={({ isActive }) => (isActive ? styles["active"] : "")}
+                      onClick={handleCloseDrawer}
+                    >
+                      Appointments
+                    </NavLink>
+                  )}
                 </li>
                 <li>
                   <NavLink

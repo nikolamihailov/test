@@ -1,35 +1,54 @@
 import { createContext, ReactNode, useCallback, useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { useLoggedUser } from "../hooks/users/useLoggedUser";
+import { LoggedUser } from "../types/User";
 
 interface AuthContextType {
   isAuthenticated: boolean;
   loginUser: (token: string) => void;
   logoutUser: () => void;
+  logoutExpiredSession: () => void;
+  user: LoggedUser | undefined;
+  token: string | undefined;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<{ token: string } | null>(() => {
-    const storedUser = localStorage.getItem("auth");
-    return storedUser ? JSON.parse(storedUser) : null;
+  const [token, setToken] = useState<{ token: string } | null>(() => {
+    const storedToken = localStorage.getItem("auth");
+    return storedToken ? JSON.parse(storedToken) : null;
   });
+  const { data: user, refetch } = useLoggedUser(token?.token || "");
 
-  const loginUser = useCallback((token: string) => {
-    setUser({ token });
-    localStorage.setItem("auth", JSON.stringify({ token }));
-  }, []);
+  const loginUser = useCallback(
+    (token: string) => {
+      setToken({ token });
+      localStorage.setItem("auth", JSON.stringify({ token }));
+      refetch();
+    },
+    [refetch]
+  );
 
   const logoutUser = useCallback(() => {
-    setUser(null);
+    setToken(null);
     localStorage.removeItem("auth");
     toast.success("Successfully logged out!");
   }, []);
 
+  const logoutExpiredSession = useCallback(() => {
+    setToken(null);
+    localStorage.removeItem("auth");
+    toast.error("Your session has expired");
+  }, []);
+
   const values = {
-    isAuthenticated: !!user,
+    user,
+    isAuthenticated: !!token,
     loginUser,
     logoutUser,
+    logoutExpiredSession,
+    token: token?.token,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

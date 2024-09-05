@@ -10,11 +10,16 @@ import ErrorPage from "../pages/ErrorPage";
 import Profile from "../pages/Profile";
 import PublicRoute from "./RouteGuards/PublicRoute";
 import ProtectedRoute from "./RouteGuards/ProtectedRoute";
+import AdminRoute from "./RouteGuards/AdminRoute";
+import ServicePage from "../pages/ServicePage";
+import AdminLayout from "../pages/AdminLayout";
+import Admin from "../pages/Admin";
+import AdminServices from "../pages/AdminServices";
 
 export const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <Layout />, // Main layout for general user routes
     children: [
       {
         element: <LandingPage />,
@@ -24,11 +29,11 @@ export const appRouter = createBrowserRouter([
         element: <PublicRoute />,
         children: [
           {
-            path: "/login",
+            path: "login",
             element: <Login />,
           },
           {
-            path: "/register",
+            path: "register",
             element: <Register />,
           },
         ],
@@ -37,27 +42,63 @@ export const appRouter = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            path: "/home",
+            path: "home",
             element: <Home />,
           },
           {
-            path: "/services",
+            path: "services",
             element: <Services />,
           },
           {
-            path: "/appointments",
+            path: "services/:id",
+            element: <ServicePage />,
+          },
+          {
+            path: "appointments",
             element: <Appointments />,
           },
           {
-            path: "/profile",
+            path: "profile",
             element: <Profile />,
           },
         ],
       },
       {
-        path: "/*",
+        path: "*",
         element: <ErrorPage />,
       },
     ],
+  },
+  {
+    path: "/admin-panel",
+    element: <AdminLayout />,
+    children: [
+      {
+        element: <AdminRoute />,
+        children: [
+          {
+            element: <Admin />,
+            index: true,
+          },
+          {
+            path: "services",
+            element: <AdminServices />,
+          },
+          {
+            path: "users",
+            element: <h1>Users</h1>,
+          },
+        ],
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
+      },
+    ],
+  },
+
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);

@@ -5,7 +5,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 9.6rem;
   align-items: center;
-  padding: 3.2rem;
+  padding: 0 3.2rem;
 }
 
 .img-box img {

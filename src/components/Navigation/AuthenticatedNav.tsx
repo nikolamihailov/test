@@ -8,7 +8,7 @@ import styles from "./Navigation.module.css";
 import { logoutBtnSX } from "../../utils/StylesHelper/LogoutBtn";
 
 function AuthenticatedNav() {
-  const { logoutUser } = useAuth();
+  const { logoutUser, user } = useAuth();
   const naviagetTo = useNavigate();
   const theme = useTheme();
 
@@ -36,12 +36,15 @@ function AuthenticatedNav() {
         </NavLink>
       </li>
       <li>
-        <NavLink
-          to="/appointments"
-          className={({ isActive }) => (isActive ? styles["active"] : "")}
-        >
-          Appointments
-        </NavLink>
+        {user?.role === "ADMIN" && <NavLink to="/admin-panel">Admin Panel</NavLink>}
+        {user?.role !== "ADMIN" && (
+          <NavLink
+            to="/appointments"
+            className={({ isActive }) => (isActive ? styles["active"] : "")}
+          >
+            Appointments
+          </NavLink>
+        )}
       </li>
       <li>
         <NavLink to="/profile" className={({ isActive }) => (isActive ? styles["active"] : "")}>
