@@ -1,3 +1,4 @@
+import ServicesSection from "../features/services/ServicesSection";
 import useTitle from "../hooks/useTitle";
 
 function Services() {
@@ -5,7 +6,7 @@ function Services() {
 
   return (
     <>
-      <h1>Services page</h1>
+      <ServicesSection />
     </>
   );
 }
