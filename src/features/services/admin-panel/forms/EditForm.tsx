@@ -1,15 +1,14 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useService } from "../../../../hooks/services/useService";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { useServiceQuery } from "../../../../hooks/services/useService";
 import Spinner from "../../../../components/Spinner/Spinner";
-import { ServiceAddUpdate } from "../../../../types/Service";
+import { ServiceFormFields } from "../../../../types/Service";
 import { serviceFormBox, serviceFormButtons } from "../../../../utils/StylesHelper/Services";
 
 type EditFormProps = {
   handleClose: () => void;
-  onSubmit: (data: ServiceAddUpdate) => void;
+  onSubmit: (data: ServiceFormFields) => void;
   serviceId: number;
 };
 
@@ -19,7 +18,7 @@ function EditForm({ handleClose, onSubmit, serviceId }: EditFormProps) {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<ServiceAddUpdate>({
+  } = useForm<ServiceFormFields>({
     defaultValues: {
       name: "",
       description: "",
@@ -28,9 +27,7 @@ function EditForm({ handleClose, onSubmit, serviceId }: EditFormProps) {
     },
   });
 
-  const { token } = useAuth();
-
-  const { data: service, isLoading, isError } = useService(token, serviceId);
+  const { data: service, isLoading, isError } = useServiceQuery(serviceId);
 
   useEffect(() => {
     if (service) {

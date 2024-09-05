@@ -9,9 +9,9 @@ import Modal from "../../../components/UI/Modal/Modal";
 import EditForm from "./forms/EditForm";
 import DeleteConfirm from "./forms/DeleteConfirm";
 import { useAuth } from "../../../contexts/AuthContext";
-import { useUpdateService } from "../../../hooks/services/useUpdateService";
-import { useDeleteService } from "../../../hooks/services/useDeleteService";
-import { ServiceAddUpdate } from "../../../types/Service";
+import { useUpdateServiceMutation } from "../../../hooks/services/useUpdateService";
+import { useDeleteServiceMutation } from "../../../hooks/services/useDeleteService";
+import { ServiceFormFields } from "../../../types/Service";
 import {
   serviceAvatarSx,
   serviceIconSx,
@@ -32,6 +32,12 @@ type ServiceItemProps = {
   refetchServices: () => void;
 };
 
+enum Operation {
+  None = "",
+  Edit = "edit",
+  Delete = "delete",
+}
+
 function ServiceItemAdmin({
   id,
   name,
@@ -41,19 +47,19 @@ function ServiceItemAdmin({
   refetchServices,
 }: ServiceItemProps) {
   const [open, setIsOpen] = useState(false);
-  const [operation, setOperation] = useState<"" | "edit" | "delete">("");
+  const [operation, setOperation] = useState<Operation>(Operation.None);
   const theme = useTheme();
-  const { token, logoutExpiredSession } = useAuth();
+  const { logoutExpiredSession } = useAuth();
 
-  const { mutateAsync: updateService } = useUpdateService(token, id);
-  const { mutateAsync: deleteService } = useDeleteService(token, id);
+  const { mutateAsync: updateService } = useUpdateServiceMutation(id);
+  const { mutateAsync: deleteService } = useDeleteServiceMutation(id);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
   }, []);
 
   const onUpdateSubmit = useCallback(
-    async (serviceData: ServiceAddUpdate) => {
+    async (serviceData: ServiceFormFields) => {
       updateService(serviceData)
         .then((serviceData) => {
           toast.success(`Service ${serviceData.name} updated!`);
@@ -130,7 +136,7 @@ function ServiceItemAdmin({
             sx={serviceItemAdminBtnSx(theme)}
             onClick={() => {
               setIsOpen(true);
-              setOperation("edit");
+              setOperation(Operation.Edit);
             }}
           >
             Edit
@@ -141,7 +147,7 @@ function ServiceItemAdmin({
             sx={serviceItemAdminBtnSx(theme)}
             onClick={() => {
               setIsOpen(true);
-              setOperation("delete");
+              setOperation(Operation.Delete);
             }}
           >
             Delete

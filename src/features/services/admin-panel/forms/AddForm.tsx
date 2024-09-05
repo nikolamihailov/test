@@ -4,8 +4,8 @@ import { Box, Button, CircularProgress, TextField } from "@mui/material";
 
 import { toast } from "react-toastify";
 import { useAuth } from "../../../../contexts/AuthContext";
-import { useCreateService } from "../../../../hooks/services/useCreateService";
-import { ServiceAddUpdate } from "../../../../types/Service";
+import { useCreateServiceMutation } from "../../../../hooks/services/useCreateService";
+import { ServiceFormFields } from "../../../../types/Service";
 import { serviceFormBox, serviceFormButtons } from "../../../../utils/StylesHelper/Services";
 
 type AddFormProps = {
@@ -18,7 +18,7 @@ function AddForm({ handleClose, refetchServices }: AddFormProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ServiceAddUpdate>({
+  } = useForm<ServiceFormFields>({
     defaultValues: {
       name: "",
       description: "",
@@ -26,10 +26,10 @@ function AddForm({ handleClose, refetchServices }: AddFormProps) {
       durationMinutes: 0,
     },
   });
-  const { token, logoutExpiredSession } = useAuth();
-  const { mutateAsync, isPending } = useCreateService(token);
+  const { logoutExpiredSession } = useAuth();
+  const { mutateAsync, isPending } = useCreateServiceMutation();
 
-  const onSubmit = async (serviceData: ServiceAddUpdate) => {
+  const onSubmit = async (serviceData: ServiceFormFields) => {
     mutateAsync(serviceData)
       .then((serviceData) => {
         toast.success(`Service ${serviceData.name} created!`);

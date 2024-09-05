@@ -1,6 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { useAuth } from "../../contexts/AuthContext";
-import { useService } from "../../hooks/services/useService";
+import { useServiceQuery } from "../../hooks/services/useService";
 import { sectionStyles } from "../../utils/StylesHelper/Section";
 import serviceImg from "/service.png";
 import Button from "../../components/UI/Button/Button";
@@ -19,8 +18,7 @@ type ServicePageSectionProps = {
 
 function ServicePageSection({ id }: ServicePageSectionProps) {
   const theme = useTheme();
-  const { token } = useAuth();
-  const { data, isLoading } = useService(token, id);
+  const { data, isLoading } = useServiceQuery(id);
 
   if (isLoading) {
     return <Spinner />;

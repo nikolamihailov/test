@@ -1,21 +1,19 @@
 import { useTheme } from "@mui/material";
 import Section from "../../components/UI/Section/Section";
 import SectionInfo from "../../components/Sections/SectionInfo";
-import { useServices } from "../../hooks/services/useServices";
-import { useAuth } from "../../contexts/AuthContext";
+import { useServicesQuery } from "../../hooks/services/useServices";
 import { serviceSectionStyles } from "../../utils/StylesHelper/Services";
 import { usePagination } from "../../hooks/usePagination";
-import PaginationComp from "../../components/PaginationAndSelectItems/Pagination";
+import Pagination from "../../components/PaginationAndSelectItems/Pagination";
 import ServicesContainer from "./ServicesContainer";
 import Spinner from "../../components/Spinner/Spinner";
 import SelectItemsPerPage from "../../components/PaginationAndSelectItems/SelectItemsPerPage";
 
 function ServicesSection() {
   const theme = useTheme();
-  const { token } = useAuth();
   const { page, itemsPerPage, handleItemsPerPageChange, handlePageChange } = usePagination();
 
-  const { data, isLoading, error } = useServices(token, page, itemsPerPage);
+  const { data, isLoading, error } = useServicesQuery(page, itemsPerPage);
 
   if (isLoading) {
     return <Spinner />;
@@ -35,11 +33,7 @@ function ServicesSection() {
         itemName="Services"
       />
       <ServicesContainer services={data?.content} />
-      <PaginationComp
-        totalPages={data?.totalPages || 0}
-        page={page}
-        onPageChange={handlePageChange}
-      />
+      <Pagination totalPages={data?.totalPages || 0} page={page} onPageChange={handlePageChange} />
     </Section>
   );
 }

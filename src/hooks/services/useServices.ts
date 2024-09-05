@@ -3,14 +3,14 @@ import { getServices } from "../../services/services/serviceService";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 
-export const useServices = (token: string | undefined, page: number = 0, size: number = 20) => {
+export const useServicesQuery = (page: number = 0, size: number = 20) => {
   const { logoutExpiredSession } = useAuth();
 
   return useQuery({
     queryKey: ["getServices", page, size],
     queryFn: async () => {
       try {
-        const response = await getServices(token, page, size);
+        const response = await getServices(page, size);
         return response;
       } catch (error) {
         if (axios.isAxiosError(error)) {
