@@ -82,6 +82,7 @@ function Login() {
             error={errors.email?.message?.length ? true : false}
             helperText={errors.email?.message}
             type="email"
+            autoComplete="email"
           />
           <FormControl variant="outlined" fullWidth error={!!errors.password}>
             <InputLabel htmlFor="outlined-adornment-password" error={!!errors.password}>
@@ -106,6 +107,7 @@ function Login() {
                 required: "Password is required!",
               })}
               error={!!errors.password}
+              autoComplete="current-password"
             />
             <FormHelperText error={!!errors.password}>{errors.password?.message}</FormHelperText>
           </FormControl>
