@@ -9,7 +9,7 @@ export type Service = {
   users: User[];
 };
 
-export type ServiceAddUpdate = {
+export type ServiceFormFields = {
   name: string;
   description: string;
   durationMinutes: number;
