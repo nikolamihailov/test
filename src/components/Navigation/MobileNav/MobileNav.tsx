@@ -27,7 +27,7 @@ function MobileNav() {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <NavLink to={"/"}>
+      <NavLink to={isAuthenticated ? "/home" : "/"}>
         <Logo src={logo} width={60} />
       </NavLink>
       <IconButton onClick={() => setOpen(true)} sx={{ color: theme.palette.secondary.main }}>
@@ -64,7 +64,7 @@ function MobileNav() {
                 </li>
                 <li>
                   {user?.role === "ADMIN" && (
-                    <NavLink to={"/admin"} onClick={handleCloseDrawer}>
+                    <NavLink to={"/admin-panel"} onClick={handleCloseDrawer}>
                       Admin Panel
                     </NavLink>
                   )}
