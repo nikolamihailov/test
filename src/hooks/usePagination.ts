@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-export const usePagination = (initialPage: number = 0, initialItemsPerPage: number = 4) => {
+export const usePagination = (initialPage: number = 0, initialItemsPerPage: number = 6) => {
   const [page, setPage] = useState(initialPage);
   const [itemsPerPage, setItemsPerPage] = useState(initialItemsPerPage);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,7 +31,7 @@ export const usePagination = (initialPage: number = 0, initialItemsPerPage: numb
 
   useEffect(() => {
     const pageFromParams = parseInt(searchParams.get("page") ?? "0");
-    const itemsPerPageFromParams = parseInt(searchParams.get("items") ?? "4");
+    const itemsPerPageFromParams = parseInt(searchParams.get("items") ?? "6");
 
     setPage(pageFromParams);
     setItemsPerPage(itemsPerPageFromParams);
