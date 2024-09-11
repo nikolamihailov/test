@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import logo from "/logo.png";
 import styles from "./MobileNav.module.css";
 import { logoutBtnSX } from "../../../utils/StylesHelper/LogoutBtn";
+import { RoleTypes } from "../../../types/Role";
 
 function MobileNav() {
   const [open, setOpen] = useState<boolean>(false);
@@ -63,12 +64,12 @@ function MobileNav() {
                   </NavLink>
                 </li>
                 <li>
-                  {user?.role === "ADMIN" && (
+                  {user?.role === RoleTypes.Admin && (
                     <NavLink to={"/admin-panel"} onClick={handleCloseDrawer}>
                       Admin Panel
                     </NavLink>
                   )}
-                  {user?.role !== "ADMIN" && (
+                  {user?.role !== RoleTypes.Admin && (
                     <NavLink
                       to={"/appointments"}
                       className={({ isActive }) => (isActive ? styles["active"] : "")}
