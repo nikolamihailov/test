@@ -8,8 +8,11 @@ interface AuthContextType {
   loginUser: (token: string) => void;
   logoutUser: () => void;
   logoutExpiredSession: () => void;
+  updateLoggedUser: () => void;
+  deletedUserAccount: () => void;
   user: LoggedUser | undefined;
   token: string | undefined;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,7 +22,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const storedToken = localStorage.getItem("auth");
     return storedToken ? JSON.parse(storedToken) : null;
   });
-  const { data: user, refetch } = useLoggedUser(token?.token || "");
+  const { data: user, refetch, isLoading } = useLoggedUser(token?.token || "");
 
   const loginUser = useCallback(
     (token: string) => {
@@ -42,6 +45,15 @@ function AuthProvider({ children }: { children: ReactNode }) {
     toast.error("Your session has expired");
   }, []);
 
+  const updateLoggedUser = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  const deletedUserAccount = useCallback(() => {
+    setToken(null);
+    localStorage.removeItem("auth");
+  }, []);
+
   const values = {
     user,
     isAuthenticated: !!token,
@@ -49,6 +61,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
     logoutUser,
     logoutExpiredSession,
     token: token?.token,
+    isLoading,
+    updateLoggedUser,
+    deletedUserAccount,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
