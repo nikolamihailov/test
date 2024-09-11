@@ -1,3 +1,4 @@
+import ProfileSection from "../features/user/ProfileSection";
 import useTitle from "../hooks/useTitle";
 
 function Profile() {
@@ -5,7 +6,7 @@ function Profile() {
 
   return (
     <>
-      <h1>Profile Page</h1>
+      <ProfileSection />
     </>
   );
 }
