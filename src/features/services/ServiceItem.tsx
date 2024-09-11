@@ -13,6 +13,7 @@ import {
   serviceListItemSx,
   serviceListSx,
 } from "../../utils/StylesHelper/Services";
+import { useNavigate } from "react-router-dom";
 
 type ServiceItemProps = {
   id: number;
@@ -24,6 +25,8 @@ type ServiceItemProps = {
 
 function ServiceItem({ id, name, price, durationMinutes, staffMembers }: ServiceItemProps) {
   const theme = useTheme();
+  const navigateTo = useNavigate();
+
   return (
     <Grow in={true} timeout={{ appear: 100, enter: 300, exit: 200 }}>
       <Box sx={serviceItemSX(theme)}>
@@ -67,10 +70,10 @@ function ServiceItem({ id, name, price, durationMinutes, staffMembers }: Service
           <Button
             bgColor={theme.palette.primary.main}
             color={theme.palette.secondary.main}
-            el="link"
+            el="button"
             hoverBgColor={theme.palette.primary.light}
             hoverColor={theme.palette.secondary.main}
-            href={`${id}`}
+            onClickFunc={() => navigateTo(`/services/${id}`)}
           >
             Details
           </Button>
