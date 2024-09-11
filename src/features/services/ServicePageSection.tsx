@@ -15,6 +15,7 @@ import {
   servicePageSectionSx,
 } from "../../utils/StylesHelper/Services";
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
 type ServicePageSectionProps = {
   id: number | undefined;
@@ -25,13 +26,17 @@ function ServicePageSection({ id }: ServicePageSectionProps) {
   const navigate = useNavigate();
   const { data, isLoading } = useServiceQuery(id);
 
+  const navigateBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   if (isLoading) {
     return <Spinner />;
   }
 
   return (
     <Box sx={sectionStyles(theme)}>
-      <Button onClick={() => navigate(-1)} sx={servicePageSectionBtnSx(theme)}>
+      <Button onClick={() => navigateBack()} sx={servicePageSectionBtnSx(theme)}>
         <ArrowBackIcon />
       </Button>
 
