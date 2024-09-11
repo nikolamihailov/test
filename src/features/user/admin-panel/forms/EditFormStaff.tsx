@@ -86,6 +86,14 @@ function EditFormStaff({ id, handleClose, onSubmit }: EditFormStaffProps) {
     setValue("serviceIds", value as number[]);
   };
 
+  const handleDeleteSelectedService = (serviceId: number) => {
+    setSelectedServices(selectedServices.filter((item) => item !== serviceId));
+    setValue(
+      "serviceIds",
+      selectedServices.filter((item) => item !== serviceId)
+    );
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -191,6 +199,7 @@ function EditFormStaff({ id, handleClose, onSubmit }: EditFormStaffProps) {
         <Select
           multiple
           {...register("serviceIds", { required: "At least one service must be selected!" })}
+          error={!!errors.serviceIds}
           value={selectedServices}
           onChange={handleServiceChange}
           input={<OutlinedInput label="Services" />}
@@ -204,13 +213,7 @@ function EditFormStaff({ id, handleClose, onSubmit }: EditFormStaffProps) {
                   <Chip
                     key={serviceId}
                     label={serviceName}
-                    onDelete={() => {
-                      setSelectedServices(selectedServices.filter((item) => item !== serviceId));
-                      setValue(
-                        "serviceIds",
-                        selectedServices.filter((item) => item !== serviceId)
-                      );
-                    }}
+                    onDelete={() => handleDeleteSelectedService(serviceId)}
                     deleteIcon={<CancelIcon onMouseDown={(event) => event.stopPropagation()} />}
                   />
                 );
@@ -231,13 +234,13 @@ function EditFormStaff({ id, handleClose, onSubmit }: EditFormStaffProps) {
               {selectedServices.includes(service.id) ? <CheckIcon color="primary" /> : null}
             </MenuItem>
           ))}
-          {!!errors.serviceIds && (
-            <FormHelperText sx={{ color: "red" }}>{errors.serviceIds?.message}</FormHelperText>
-          )}
           <MenuItem ref={inViewRef}>
             {isFetchingNextPage && <CircularProgress size={24} />}
           </MenuItem>
         </Select>
+        {!!errors.serviceIds && (
+          <FormHelperText sx={{ color: "red" }}>{errors.serviceIds?.message}</FormHelperText>
+        )}
       </FormControl>
 
       <Box sx={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
