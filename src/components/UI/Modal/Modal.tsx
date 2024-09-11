@@ -19,7 +19,7 @@ function Modal({ open, handleClose, title, children }: ModalProps) {
       PaperProps={{
         sx: modalSX(theme),
       }}
-      aria-hidden="false"
+      aria-hidden={false}
     >
       {title && (
         <DialogTitle sx={dialogTitleSx}>
