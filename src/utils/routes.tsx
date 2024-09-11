@@ -15,11 +15,12 @@ import ServicePage from "../pages/ServicePage";
 import AdminLayout from "../pages/AdminLayout";
 import Admin from "../pages/Admin";
 import AdminServices from "../pages/AdminServices";
+import AdminUsers from "../pages/AdminUsers";
 
 export const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, // Main layout for general user routes
+    element: <Layout />,
     children: [
       {
         element: <LandingPage />,
@@ -86,7 +87,7 @@ export const appRouter = createBrowserRouter([
           },
           {
             path: "users",
-            element: <h1>Users</h1>,
+            element: <AdminUsers />,
           },
         ],
       },
