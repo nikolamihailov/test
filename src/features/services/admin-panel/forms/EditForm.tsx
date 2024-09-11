@@ -94,11 +94,13 @@ function EditForm({ handleClose, onSubmit, serviceId }: EditFormProps) {
           {...register("price", {
             valueAsNumber: true,
             min: {
-              value: 0,
+              value: 1,
               message: "Price must be a positive number!",
             },
           })}
           fullWidth
+          error={!!errors.price}
+          helperText={errors.price?.message}
         />
 
         <TextField
@@ -108,7 +110,7 @@ function EditForm({ handleClose, onSubmit, serviceId }: EditFormProps) {
             valueAsNumber: true,
             required: "Duration is required",
             min: {
-              value: 0,
+              value: 1,
               message: "Duration must be above 0!",
             },
             max: {
