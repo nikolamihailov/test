@@ -32,6 +32,7 @@ import {
   serviceListItemSx,
   serviceListSx,
 } from "../../../utils/StylesHelper/Services";
+import { Operation } from "../../../types/EntitiesOperations";
 
 type ServiceItemProps = {
   id: number;
@@ -41,12 +42,6 @@ type ServiceItemProps = {
   staffMembers: number;
   refetchServices: () => void;
 };
-
-enum Operation {
-  None = "",
-  Edit = "edit",
-  Delete = "delete",
-}
 
 function ServiceItemAdmin({
   id,
@@ -66,6 +61,11 @@ function ServiceItemAdmin({
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
+  }, []);
+
+  const handleActionClick = useCallback((operation: Operation) => {
+    setIsOpen(true);
+    setOperation(operation);
   }, []);
 
   const onUpdateSubmit = useCallback(
@@ -147,10 +147,7 @@ function ServiceItemAdmin({
           >
             <Button
               sx={serviceItemAdminBtnSx(theme)}
-              onClick={() => {
-                setIsOpen(true);
-                setOperation(Operation.Edit);
-              }}
+              onClick={() => handleActionClick(Operation.Edit)}
             >
               Edit
               <EditIcon sx={{ fontSize: "2.4rem", cursor: "pointer" }} />
@@ -158,10 +155,7 @@ function ServiceItemAdmin({
 
             <Button
               sx={serviceItemAdminBtnSx(theme)}
-              onClick={() => {
-                setIsOpen(true);
-                setOperation(Operation.Delete);
-              }}
+              onClick={() => handleActionClick(Operation.Delete)}
             >
               Delete
               <DeleteIcon sx={{ fontSize: "2.4rem", cursor: "pointer" }} />
@@ -171,12 +165,12 @@ function ServiceItemAdmin({
           <Modal
             open={open}
             handleClose={handleClose}
-            title={operation === "edit" ? "Edit Service" : "Delete Service"}
+            title={operation === Operation.Edit ? "Edit Service" : "Delete Service"}
           >
-            {operation === "edit" && (
+            {operation === Operation.Edit && (
               <EditForm handleClose={handleClose} serviceId={id} onSubmit={onUpdateSubmit} />
             )}
-            {operation === "delete" && (
+            {operation === Operation.Delete && (
               <DeleteConfirm handleClose={handleClose} onSubmit={onDeleteSubmit} />
             )}
           </Modal>

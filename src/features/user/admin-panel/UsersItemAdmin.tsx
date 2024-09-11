@@ -34,16 +34,12 @@ import EditForm from "./forms/EditForm";
 import { useUpdateUserMutation } from "../../../hooks/users/useUpdateUser";
 import { useNavigate } from "react-router-dom";
 import EditFormStaff from "./forms/EditFormStaff";
+import { Operation } from "../../../types/EntitiesOperations";
+import { RoleTypes } from "../../../types/Role";
 
 type UserItemProps = UserWithRole & {
   refetchUsers: () => void;
 };
-
-enum Operation {
-  None = "",
-  Edit = "edit",
-  Delete = "delete",
-}
 
 function UserItemAdmin({
   id,
@@ -65,6 +61,11 @@ function UserItemAdmin({
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
+  }, []);
+
+  const handleActionClick = useCallback((operation: Operation) => {
+    setIsOpen(true);
+    setOperation(operation);
   }, []);
 
   const onUpdateSubmit = useCallback(
@@ -130,7 +131,7 @@ function UserItemAdmin({
     <Grow in={true} timeout={{ appear: 100, enter: 300, exit: 200 }}>
       <Box sx={userAdminItemSX(theme)}>
         <Box sx={userItemBoxSx}>
-          {role === "STAFF_MEMBER" && (
+          {role === RoleTypes.Staff && (
             <Box sx={{ display: "flex", gap: "0.4rem", margin: "0 auto" }}>
               <Chip
                 label={`${"services".toUpperCase()}: ${serviceIds.length}`}
@@ -163,26 +164,20 @@ function UserItemAdmin({
           <Box
             sx={{ display: "flex", gap: "2.4rem", justifyContent: "center", alignItems: "center" }}
           >
-            {(role !== "ADMIN" || email === user?.email) && (
+            {(role !== RoleTypes.Admin || email === user?.email) && (
               <Button
                 sx={userItemAdminBtnSx(theme)}
-                onClick={() => {
-                  setIsOpen(true);
-                  setOperation(Operation.Edit);
-                }}
+                onClick={() => handleActionClick(Operation.Edit)}
               >
                 Edit
                 <EditIcon sx={{ fontSize: "1.5rem", cursor: "pointer" }} />
               </Button>
             )}
 
-            {(role !== "ADMIN" || email === user?.email) && (
+            {(role !== RoleTypes.Admin || email === user?.email) && (
               <Button
                 sx={userItemAdminBtnSx(theme)}
-                onClick={() => {
-                  setIsOpen(true);
-                  setOperation(Operation.Delete);
-                }}
+                onClick={() => handleActionClick(Operation.Delete)}
               >
                 Delete
                 <DeleteIcon sx={{ fontSize: "1.5rem", cursor: "pointer" }} />
@@ -194,15 +189,15 @@ function UserItemAdmin({
         <Modal
           open={open}
           handleClose={handleClose}
-          title={operation === "edit" ? "Edit User" : "Delete User"}
+          title={operation === Operation.Edit ? "Edit User" : "Delete User"}
         >
-          {operation === "edit" && role !== "STAFF_MEMBER" && (
+          {operation === Operation.Edit && role !== RoleTypes.Staff && (
             <EditForm handleClose={handleClose} id={id} onSubmit={onUpdateSubmit} />
           )}
-          {operation === "edit" && role === "STAFF_MEMBER" && (
+          {operation === Operation.Edit && role === RoleTypes.Staff && (
             <EditFormStaff handleClose={handleClose} id={id} onSubmit={onUpdateSubmit} />
           )}
-          {operation === "delete" && (
+          {operation === Operation.Delete && (
             <DeleteConfirm handleClose={handleClose} onSubmit={onDeleteSubmit} />
           )}
         </Modal>
