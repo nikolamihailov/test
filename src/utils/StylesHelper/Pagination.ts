@@ -5,6 +5,9 @@ export const pagesSx = (theme: Theme): SxProps => ({
     bgcolor: theme.palette.primary.main,
     color: theme.palette.secondary.main,
     fontSize: "1.8rem",
+    width: "4rem",
+    height: "4rem",
+    padding: "1.6rem",
   },
   "& .MuiPaginationItem-root:hover": {
     bgcolor: theme.palette.primary.dark,
