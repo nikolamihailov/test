@@ -28,10 +28,10 @@ function SelectItemsPerPage({ itemsPerPage, onItemsPerPageChange, itemName }: Se
           inputProps={{ "aria-label": `${itemName} per page` }}
           sx={selectSx(theme)}
         >
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={50}>50</MenuItem>
+          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={12}>12</MenuItem>
+          <MenuItem value={18}>18</MenuItem>
+          <MenuItem value={24}>24</MenuItem>
         </Select>
       </Box>
     </>

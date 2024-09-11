@@ -39,6 +39,8 @@ function AddForm({ handleClose, refetchServices }: AddFormProps) {
       .catch((error) => {
         if (error.response?.status === 403) {
           logoutExpiredSession();
+        } else if (error?.response?.status === 409) {
+          toast.error("Service with this name exists!");
         } else {
           toast.error("Something went wrong");
         }
@@ -94,11 +96,13 @@ function AddForm({ handleClose, refetchServices }: AddFormProps) {
             {...register("price", {
               valueAsNumber: true,
               min: {
-                value: 0,
+                value: 1,
                 message: "Price must be a positive number!",
               },
             })}
             fullWidth
+            error={!!errors.price}
+            helperText={errors.price?.message}
           />
 
           <TextField
@@ -108,7 +112,7 @@ function AddForm({ handleClose, refetchServices }: AddFormProps) {
               valueAsNumber: true,
               required: "Duration is required",
               min: {
-                value: 0,
+                value: 1,
                 message: "Duration must be above 0!",
               },
               max: {

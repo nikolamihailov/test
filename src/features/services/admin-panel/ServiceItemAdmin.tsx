@@ -1,4 +1,14 @@
-import { Box, Typography, Chip, List, ListItem, Avatar, useTheme, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Chip,
+  List,
+  ListItem,
+  Avatar,
+  useTheme,
+  Button,
+  Grow,
+} from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import EditIcon from "@mui/icons-material/Edit";
@@ -22,6 +32,7 @@ import {
   serviceListItemSx,
   serviceListSx,
 } from "../../../utils/StylesHelper/Services";
+import { Operation } from "../../../types/EntitiesOperations";
 
 type ServiceItemProps = {
   id: number;
@@ -31,12 +42,6 @@ type ServiceItemProps = {
   staffMembers: number;
   refetchServices: () => void;
 };
-
-enum Operation {
-  None = "",
-  Edit = "edit",
-  Delete = "delete",
-}
 
 function ServiceItemAdmin({
   id,
@@ -58,6 +63,11 @@ function ServiceItemAdmin({
     setIsOpen(false);
   }, []);
 
+  const handleActionClick = useCallback((operation: Operation) => {
+    setIsOpen(true);
+    setOperation(operation);
+  }, []);
+
   const onUpdateSubmit = useCallback(
     async (serviceData: ServiceFormFields) => {
       updateService(serviceData)
@@ -69,6 +79,8 @@ function ServiceItemAdmin({
         .catch((error) => {
           if (error.response?.status === 403) {
             logoutExpiredSession();
+          } else if (error?.response?.status === 409) {
+            toast.error("Service with this name exists!");
           } else {
             toast.error("Failed to update service.");
           }
@@ -94,81 +106,77 @@ function ServiceItemAdmin({
   }, [logoutExpiredSession, deleteService, handleClose, refetchServices]);
 
   return (
-    <Box sx={serviceItemSX(theme)}>
-      <Box sx={serviceItemTextBoxSx}>
-        <Box sx={{ display: "flex", gap: "0.4rem", margin: "0 auto" }}>
-          <Chip
-            label={`${"specialists".toUpperCase()}: ${staffMembers}`}
-            sx={serviceItemChipSx(theme)}
-          />
-        </Box>
+    <Grow in={true} timeout={{ appear: 100, enter: 300, exit: 200 }}>
+      <Box sx={serviceItemSX(theme)}>
+        <Box sx={serviceItemTextBoxSx}>
+          <Box sx={{ display: "flex", gap: "0.4rem", margin: "0 auto" }}>
+            <Chip
+              label={`${"specialists".toUpperCase()}: ${staffMembers}`}
+              sx={serviceItemChipSx(theme)}
+            />
+          </Box>
 
-        <Typography
-          variant="h5"
-          component="p"
-          sx={{ fontWeight: 600, color: theme.palette.primary.main }}
-        >
-          {name}
-        </Typography>
-
-        <List sx={serviceListSx}>
-          <ListItem sx={serviceListItemSx}>
-            <Avatar sx={serviceAvatarSx}>
-              <MonetizationOnIcon sx={serviceIconSx(theme)} />
-            </Avatar>
-            <span>
-              <strong>{price.toFixed(2)}</strong> USD
-            </span>
-          </ListItem>
-          <ListItem sx={serviceListItemSx}>
-            <Avatar sx={serviceAvatarSx}>
-              <AccessTimeIcon sx={serviceIconSx(theme)} />
-            </Avatar>
-            <span>
-              <strong>{durationMinutes}</strong> minutes
-            </span>
-          </ListItem>
-        </List>
-        <Box
-          sx={{ display: "flex", gap: "2.4rem", justifyContent: "center", alignItems: "center" }}
-        >
-          <Button
-            sx={serviceItemAdminBtnSx(theme)}
-            onClick={() => {
-              setIsOpen(true);
-              setOperation(Operation.Edit);
-            }}
+          <Typography
+            variant="h5"
+            component="p"
+            sx={{ fontWeight: 600, color: theme.palette.primary.main }}
           >
-            Edit
-            <EditIcon sx={{ fontSize: "2.4rem", cursor: "pointer" }} />
-          </Button>
+            {name}
+          </Typography>
 
-          <Button
-            sx={serviceItemAdminBtnSx(theme)}
-            onClick={() => {
-              setIsOpen(true);
-              setOperation(Operation.Delete);
-            }}
+          <List sx={serviceListSx}>
+            <ListItem sx={serviceListItemSx}>
+              <Avatar sx={serviceAvatarSx}>
+                <MonetizationOnIcon sx={serviceIconSx(theme)} />
+              </Avatar>
+              <span>
+                <strong>{price.toFixed(2)}</strong> USD
+              </span>
+            </ListItem>
+            <ListItem sx={serviceListItemSx}>
+              <Avatar sx={serviceAvatarSx}>
+                <AccessTimeIcon sx={serviceIconSx(theme)} />
+              </Avatar>
+              <span>
+                <strong>{durationMinutes}</strong> minutes
+              </span>
+            </ListItem>
+          </List>
+          <Box
+            sx={{ display: "flex", gap: "2.4rem", justifyContent: "center", alignItems: "center" }}
           >
-            Delete
-            <DeleteIcon sx={{ fontSize: "2.4rem", cursor: "pointer" }} />
-          </Button>
-        </Box>
+            <Button
+              sx={serviceItemAdminBtnSx(theme)}
+              onClick={() => handleActionClick(Operation.Edit)}
+            >
+              Edit
+              <EditIcon sx={{ fontSize: "2.4rem", cursor: "pointer" }} />
+            </Button>
 
-        <Modal
-          open={open}
-          handleClose={handleClose}
-          title={operation === "edit" ? "Edit Service" : "Delete Service"}
-        >
-          {operation === "edit" && (
-            <EditForm handleClose={handleClose} serviceId={id} onSubmit={onUpdateSubmit} />
-          )}
-          {operation === "delete" && (
-            <DeleteConfirm handleClose={handleClose} onSubmit={onDeleteSubmit} />
-          )}
-        </Modal>
+            <Button
+              sx={serviceItemAdminBtnSx(theme)}
+              onClick={() => handleActionClick(Operation.Delete)}
+            >
+              Delete
+              <DeleteIcon sx={{ fontSize: "2.4rem", cursor: "pointer" }} />
+            </Button>
+          </Box>
+
+          <Modal
+            open={open}
+            handleClose={handleClose}
+            title={operation === Operation.Edit ? "Edit Service" : "Delete Service"}
+          >
+            {operation === Operation.Edit && (
+              <EditForm handleClose={handleClose} serviceId={id} onSubmit={onUpdateSubmit} />
+            )}
+            {operation === Operation.Delete && (
+              <DeleteConfirm handleClose={handleClose} onSubmit={onDeleteSubmit} />
+            )}
+          </Modal>
+        </Box>
       </Box>
-    </Box>
+    </Grow>
   );
 }
 

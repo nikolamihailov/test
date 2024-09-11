@@ -1,16 +1,21 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { useServiceQuery } from "../../hooks/services/useService";
 import { sectionStyles } from "../../utils/StylesHelper/Section";
 import serviceImg from "/service.png";
-import Button from "../../components/UI/Button/Button";
 import SectionInfo from "../../components/Sections/SectionInfo";
-import { ArrowBack } from "@mui/icons-material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import DescriptionIcon from "@mui/icons-material/Description";
 import ServiceStaffMember from "./ServiceStaffMember";
 import Spinner from "../../components/Spinner/Spinner";
-import { serviceItemImgSx, servicePageSectionSx } from "../../utils/StylesHelper/Services";
+import {
+  servicePageImgSx,
+  servicePageSectionBtnSx,
+  servicePageSectionSx,
+} from "../../utils/StylesHelper/Services";
+import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
 type ServicePageSectionProps = {
   id: number | undefined;
@@ -18,7 +23,12 @@ type ServicePageSectionProps = {
 
 function ServicePageSection({ id }: ServicePageSectionProps) {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { data, isLoading } = useServiceQuery(id);
+
+  const navigateBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
 
   if (isLoading) {
     return <Spinner />;
@@ -26,23 +36,15 @@ function ServicePageSection({ id }: ServicePageSectionProps) {
 
   return (
     <Box sx={sectionStyles(theme)}>
-      <Button
-        bgColor={theme.palette.primary.main}
-        color={theme.palette.secondary.main}
-        el="link"
-        hoverBgColor={theme.palette.primary.light}
-        hoverColor={theme.palette.secondary.main}
-        href={"/services"}
-        style={{ position: "absolute", top: "3rem", left: "1.5rem", padding: "0.8rem" }}
-      >
-        <ArrowBack />
+      <Button onClick={() => navigateBack()} sx={servicePageSectionBtnSx(theme)}>
+        <ArrowBackIcon />
       </Button>
 
-      <SectionInfo subheading="Service Details" heading={`Learn More About ${data?.name}`} />
+      <SectionInfo subheading="Service Details" heading={`${data?.name}`} />
 
       <Box sx={servicePageSectionSx}>
         <Box>
-          <Box component="img" src={serviceImg} alt={data?.name} sx={serviceItemImgSx} />
+          <Box component="img" src={serviceImg} alt={data?.name} sx={servicePageImgSx} />
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "3.2rem", textAlign: "left" }}>
           <Box sx={{ display: "flex", alignItems: "center", marginBottom: theme.spacing(1) }}>
@@ -77,11 +79,17 @@ function ServicePageSection({ id }: ServicePageSectionProps) {
               <Typography variant="body1" sx={{ fontSize: "2.1rem" }}>
                 {data.users.length >= 1 && "Specialists:"}
               </Typography>
-              {data?.users.map((u) => {
-                return (
-                  <ServiceStaffMember key={u.email} firstName={u.firstName} lastName={u.lastName} />
-                );
-              })}
+              <Box sx={{ display: "flex", gap: "0.8rem", width: "30rem", flexWrap: "wrap" }}>
+                {data?.users.map((u) => {
+                  return (
+                    <ServiceStaffMember
+                      key={u.email}
+                      firstName={u.firstName}
+                      lastName={u.lastName}
+                    />
+                  );
+                })}
+              </Box>
             </Box>
           )}
 

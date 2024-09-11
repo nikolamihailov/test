@@ -6,6 +6,7 @@ import Logo from "./Logo/Logo";
 import logo from "/logo.png";
 import styles from "./Navigation.module.css";
 import { logoutBtnSX } from "../../utils/StylesHelper/LogoutBtn";
+import { RoleTypes } from "../../types/Role";
 
 function AuthenticatedNav() {
   const { logoutUser, user } = useAuth();
@@ -36,8 +37,8 @@ function AuthenticatedNav() {
         </NavLink>
       </li>
       <li>
-        {user?.role === "ADMIN" && <NavLink to="/admin-panel">Admin Panel</NavLink>}
-        {user?.role !== "ADMIN" && (
+        {user?.role === RoleTypes.Admin && <NavLink to="/admin-panel">Admin Panel</NavLink>}
+        {user?.role !== RoleTypes.Admin && (
           <NavLink
             to="/appointments"
             className={({ isActive }) => (isActive ? styles["active"] : "")}

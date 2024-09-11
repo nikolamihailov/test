@@ -1,7 +1,7 @@
 import { SxProps, Theme } from "@mui/material";
 import { CSSProperties } from "react";
 
-export const serviceSectionStyles = (theme: Theme): CSSProperties => ({
+export const usersAdminSectionStyles = (theme: Theme): CSSProperties => ({
   height: "100%",
   display: "flex",
   flexDirection: "column",
@@ -13,7 +13,7 @@ export const serviceSectionStyles = (theme: Theme): CSSProperties => ({
   color: theme.palette.primary.main,
 });
 
-export const serviceContainerSx = {
+export const userContainerSx = {
   display: "grid",
   columnGap: {
     xs: "4.8rem",
@@ -38,7 +38,7 @@ export const serviceContainerSx = {
   },
 };
 
-export const serviceItemSX = (theme: Theme): SxProps => ({
+export const userAdminItemSX = (theme: Theme): SxProps => ({
   boxShadow: "0 2.4rem 4.8rem rgba(0, 0, 0, 0.1)",
   borderRadius: "11px",
   overflow: "hidden",
@@ -50,33 +50,11 @@ export const serviceItemSX = (theme: Theme): SxProps => ({
     boxShadow: "0 3.2rem 6.4rem rgba(0, 0, 0, 0.06)",
   },
   bgcolor: theme.palette.secondary.main,
+  position: "relative",
 });
 
-export const serviceItemImgSx: SxProps = {
-  width: "100%",
-  height: {
-    xs: "15rem",
-    sm: "15rem",
-    md: "20rem",
-    lg: "20rem",
-    xl: "25rem",
-  },
-  objectFit: "cover",
-  borderRadius: "1rem",
-};
-
-export const servicePageImgSx: SxProps = {
-  width: {
-    xs: "25rem",
-    sm: "30rem",
-    md: "35rem",
-  },
-  objectFit: "cover",
-  borderRadius: "1rem",
-};
-
-export const serviceItemTextBoxSx = {
-  flex: 2,
+export const userItemBoxSx: SxProps = {
+  height: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -92,7 +70,7 @@ export const serviceItemTextBoxSx = {
   },
 };
 
-export const serviceItemChipSx = (theme: Theme) => ({
+export const userItemChipSx = (theme: Theme) => ({
   backgroundColor: theme.palette.primary.light,
   color: theme.palette.secondary.main,
   fontWeight: 600,
@@ -102,7 +80,7 @@ export const serviceItemChipSx = (theme: Theme) => ({
   padding: "0.4rem 0.8rem",
 });
 
-export const serviceListSx: SxProps = {
+export const userItemListSx: SxProps = {
   listStyle: "none",
   display: "flex",
   flexDirection: "column",
@@ -110,51 +88,49 @@ export const serviceListSx: SxProps = {
   padding: 0,
 };
 
-export const serviceListItemSx: SxProps = {
+export const userItemListItemSx: SxProps = {
   fontSize: {
     xs: "1.6rem",
     sm: "1.8rem",
     md: "2rem",
   },
   display: "flex",
+  flexWrap: "wrap",
+  wordBreak: "break-word",
+  whiteSpace: "normal",
   alignItems: "center",
   gap: "1.6rem",
   padding: 0,
 };
 
-export const serviceAvatarSx: SxProps = {
+export const userItemAvatarSx: SxProps = {
   backgroundColor: "transparent",
 };
 
-export const serviceIconSx = (theme: Theme): SxProps => ({
+export const userIconSx = (theme: Theme): SxProps => ({
   color: theme.palette.primary.light,
   width: {
-    xs: "2.4rem",
+    xs: "2.2rem",
     sm: "2.4rem",
     md: "2.8rem",
   },
   height: {
-    xs: "2.4rem",
+    xs: "2.2rem",
     sm: "2.4rem",
     md: "2.8rem",
   },
 });
 
-export const serviceFormBox = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "1.6rem",
-  padding: "1.6rem",
-};
-
-export const serviceFormButtons = { display: "flex", gap: "1rem", justifyContent: "center" };
-
-export const serviceItemAdminBtnSx = (theme: Theme): SxProps => ({
+export const userItemAdminBtnSx = (theme: Theme): SxProps => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   gap: "1rem",
-  padding: "0.8rem 1.6rem",
+  padding: {
+    xs: "0.6rem 1.2rem",
+    sm: "0.8rem 1.4rem",
+    md: "0.8rem 1.6rem",
+  },
   bgcolor: theme.palette.primary.main,
   ":hover": {
     bgcolor: theme.palette.primary.light,
@@ -169,30 +145,3 @@ export const selectItemsAndBtnSx = {
   alignItems: "center",
   gap: "4.8rem",
 };
-
-export const servicePageSectionSx = {
-  display: "grid",
-  gridTemplateColumns: {
-    xs: "1fr",
-    sm: "1fr",
-    md: "1fr 1fr",
-  },
-  rowGap: "6.4rem",
-  columnGap: "6.4rem",
-};
-
-export const servicePageSectionBtnSx = (theme: Theme): SxProps => ({
-  position: "absolute",
-  top: "3rem",
-  left: "1.5rem",
-  padding: "2.4rem",
-  minWidth: "0",
-  width: "4rem",
-  height: "4rem",
-  borderRadius: "50%",
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.secondary.main,
-  "&:hover": {
-    backgroundColor: theme.palette.primary.light,
-  },
-});
