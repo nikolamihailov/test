@@ -1,4 +1,4 @@
-import { User } from "./User";
+import { UserWithRole } from "./User";
 
 export type Service = {
   id: number;
@@ -6,7 +6,7 @@ export type Service = {
   description: string;
   durationMinutes: number;
   price: number;
-  users: User[];
+  users: UserWithRole[];
 };
 
 export type ServiceFormFields = {
