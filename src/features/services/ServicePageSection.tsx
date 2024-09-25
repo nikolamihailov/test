@@ -15,13 +15,18 @@ import {
   servicePageSectionSx,
 } from "../../utils/StylesHelper/Services";
 import { useNavigate } from "react-router-dom";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import Modal from "../../components/UI/Modal/Modal";
+import { UserWithRole } from "../../types/User";
+import MakeAppointmentForm from "../appointments/forms/MakeAppointmentForm";
 
 type ServicePageSectionProps = {
   id: number | undefined;
 };
 
 function ServicePageSection({ id }: ServicePageSectionProps) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selectedStaff, setSelectedStaff] = useState<null | UserWithRole>(null);
   const theme = useTheme();
   const navigate = useNavigate();
   const { data, isLoading } = useServiceQuery(id);
@@ -29,6 +34,14 @@ function ServicePageSection({ id }: ServicePageSectionProps) {
   const navigateBack = useCallback(() => {
     navigate(-1);
   }, [navigate]);
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const changeSelectedStaff = useCallback((staff: UserWithRole) => {
+    setSelectedStaff(staff);
+  }, []);
 
   if (isLoading) {
     return <Spinner />;
@@ -75,17 +88,31 @@ function ServicePageSection({ id }: ServicePageSectionProps) {
           </Box>
 
           {data?.users && (
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "3.2rem" }}>
-              <Typography variant="body1" sx={{ fontSize: "2.1rem" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "3.2rem",
+              }}
+            >
+              <Typography variant="h4" sx={{ fontSize: "2.1rem" }}>
                 {data.users.length >= 1 && "Specialists:"}
               </Typography>
-              <Box sx={{ display: "flex", gap: "0.8rem", width: "30rem", flexWrap: "wrap" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "3.2rem",
+                  flexWrap: "wrap",
+                  margin: "0 auto",
+                }}
+              >
                 {data?.users.map((u) => {
                   return (
                     <ServiceStaffMember
                       key={u.email}
-                      firstName={u.firstName}
-                      lastName={u.lastName}
+                      staff={u}
+                      openModal={() => setIsOpen(true)}
+                      changeSelectedStaff={changeSelectedStaff}
                     />
                   );
                 })}
@@ -100,6 +127,10 @@ function ServicePageSection({ id }: ServicePageSectionProps) {
           )}
         </Box>
       </Box>
+
+      <Modal open={isOpen} title="Make appointment" handleClose={handleClose} maxWidth={"80rem"}>
+        <MakeAppointmentForm staff={selectedStaff} service={data} handleClose={handleClose} />
+      </Modal>
     </Box>
   );
 }
