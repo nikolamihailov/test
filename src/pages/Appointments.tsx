@@ -1,3 +1,4 @@
+import MyAppointments from "../features/appointments/MyAppointments";
 import useTitle from "../hooks/useTitle";
 
 function Appointments() {
@@ -5,7 +6,7 @@ function Appointments() {
 
   return (
     <>
-      <h1>Appointments page</h1>
+      <MyAppointments />
     </>
   );
 }
