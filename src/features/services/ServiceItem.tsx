@@ -73,7 +73,10 @@ function ServiceItem({ id, name, price, durationMinutes, staffMembers }: Service
             el="button"
             hoverBgColor={theme.palette.primary.light}
             hoverColor={theme.palette.secondary.main}
-            onClickFunc={() => navigateTo(`/services/${id}`)}
+            onClickFunc={() => {
+              window.scrollTo(0, 0);
+              navigateTo(`/services/${id}`);
+            }}
           >
             Details
           </Button>
