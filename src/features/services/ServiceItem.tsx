@@ -68,11 +68,8 @@ function ServiceItem({ id, name, price, durationMinutes, staffMembers }: Service
             </ListItem>
           </List>
           <Button
-            bgColor={theme.palette.primary.main}
-            color={theme.palette.secondary.main}
+            variant="primary"
             el="button"
-            hoverBgColor={theme.palette.primary.light}
-            hoverColor={theme.palette.secondary.main}
             onClickFunc={() => {
               window.scrollTo(0, 0);
               navigateTo(`/services/${id}`);
