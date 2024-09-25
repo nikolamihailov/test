@@ -23,6 +23,7 @@ import {
   IconTextContainer,
   FullWidthButtonContainer,
 } from "../../../utils/StylesHelper/Appointment";
+import { useNavigate } from "react-router-dom";
 
 dayjs.extend(utc);
 
@@ -37,6 +38,7 @@ function MakeAppointmentForm({ staff, service, handleClose }: MakeAppointmentFor
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<Dayjs | null>(null);
   const { mutateAsync, isPending } = useMakeAppointmentMutation();
   const { user, logoutExpiredSession } = useAuth();
+  const navigateTo = useNavigate();
   const formattedDate = date?.format("YYYY-MM-DD");
 
   const {
@@ -63,6 +65,7 @@ function MakeAppointmentForm({ staff, service, handleClose }: MakeAppointmentFor
       .then(() => {
         toast.success(`Appointment booked successfully`);
         handleClose();
+        navigateTo("/appointments");
       })
       .catch((error) => {
         if (error.response?.status === 403) {
@@ -146,13 +149,18 @@ function MakeAppointmentForm({ staff, service, handleClose }: MakeAppointmentFor
           <AvailableSlots
             slots={slots}
             selectedTimeSlot={selectedTimeSlot}
-            changeSelectedTimeStot={changeSelectedTimeSlot}
+            changeSelectedTimeSlot={changeSelectedTimeSlot}
             date={date}
           />
         </InfoContainer>
 
         <FullWidthButtonContainer>
-          <Button onClick={handleBookAppointment} variant="contained" fullWidth>
+          <Button
+            onClick={handleBookAppointment}
+            variant="contained"
+            fullWidth
+            disabled={isPending}
+          >
             {isPending ? (
               <>
                 Booking <CircularProgress size={24} color="inherit" />
@@ -161,7 +169,7 @@ function MakeAppointmentForm({ staff, service, handleClose }: MakeAppointmentFor
               "Book Appointment"
             )}
           </Button>
-          <Button variant="outlined" onClick={handleClose} fullWidth>
+          <Button variant="outlined" onClick={handleClose} fullWidth disabled={isPending}>
             Cancel
           </Button>
         </FullWidthButtonContainer>
