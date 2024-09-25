@@ -16,6 +16,7 @@ import AdminLayout from "../pages/AdminLayout";
 import Admin from "../pages/Admin";
 import AdminServices from "../pages/AdminServices";
 import AdminUsers from "../pages/AdminUsers";
+import AdminAppointments from "../pages/AdminAppointments";
 
 export const appRouter = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ export const appRouter = createBrowserRouter([
           {
             path: "users",
             element: <AdminUsers />,
+          },
+          {
+            path: "appointments",
+            element: <AdminAppointments />,
           },
         ],
       },
