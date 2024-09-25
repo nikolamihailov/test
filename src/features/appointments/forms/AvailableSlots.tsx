@@ -7,14 +7,14 @@ type AvailableSlotsProps = {
   date: Dayjs | null;
   slots: TimeSlot[] | undefined;
   selectedTimeSlot: Dayjs | null;
-  changeSelectedTimeStot: (time: Dayjs | null) => void;
+  changeSelectedTimeSlot: (time: Dayjs | null) => void;
 };
 
 function AvailableSlots({
   date,
   slots,
   selectedTimeSlot,
-  changeSelectedTimeStot,
+  changeSelectedTimeSlot,
 }: AvailableSlotsProps) {
   const theme = useTheme();
 
@@ -36,7 +36,7 @@ function AvailableSlots({
             <Button
               variant="contained"
               color="primary"
-              onClick={() => changeSelectedTimeStot(dayjs(s.startDate))}
+              onClick={() => changeSelectedTimeSlot(dayjs(s.startDate))}
               sx={{ bgcolor: isSelected ? theme.palette.primary.light : "primary" }}
             >
               {isSelected ? "Chosen" : "Choose"}
