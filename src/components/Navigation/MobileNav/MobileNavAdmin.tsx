@@ -49,6 +49,15 @@ function MobileNavAdmin() {
                 Users
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/admin-panel/appointments"
+                className={({ isActive }) => (isActive ? styles["active"] : "")}
+                onClick={handleCloseDrawer}
+              >
+                Appointments
+              </NavLink>
+            </li>
           </ul>
         </Box>
       </Drawer>
