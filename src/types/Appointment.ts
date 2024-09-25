@@ -18,7 +18,7 @@ export type AppointmentBookFields = {
   startTime: string | undefined;
 };
 
-export type AppointmetService = {
+export type AppointmentService = {
   name: string;
   durationMinutes: number;
   price: number;
@@ -33,7 +33,7 @@ export type AppointmentUser = {
 
 export type Appointment = {
   id: number;
-  service: AppointmetService;
+  service: AppointmentService;
   staffMember: AppointmentUser;
   client: AppointmentUser;
   startTime: Date;

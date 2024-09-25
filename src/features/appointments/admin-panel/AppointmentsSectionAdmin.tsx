@@ -14,7 +14,7 @@ import AppointmentDetailsModal from "./AppointmentDetailsModal";
 import AppointmentTypeButtonGroup from "./AppointmentTypeBtnGroup";
 import AppointmentCalendar from "./Calendar";
 
-const APPOINTMENT_SELECT_ARRAY = [20, 40, 60, 80];
+const APPOINTMENT_SELECT_OPTIONS = [20, 40, 60, 80];
 
 function AppointmentsSectionAdmin() {
   const [activeAppointmentType, setActiveAppointmentType] = useState<StatusTypeParam>(
@@ -73,7 +73,7 @@ function AppointmentsSectionAdmin() {
           itemsPerPage={itemsPerPage}
           onItemsPerPageChange={handleItemsPerPageChange}
           itemName="Appointments"
-          selectOptionsNumbers={APPOINTMENT_SELECT_ARRAY}
+          selectOptionsNumbers={APPOINTMENT_SELECT_OPTIONS}
         />
       </Box>
 
