@@ -4,6 +4,7 @@ import Button from "../../UI/Button/Button";
 import { welcomeSection } from "../../../utils/StylesHelper/Section";
 import { callToActionBtns } from "../../../utils/StylesHelper/WelcomeBack";
 import { useAuth } from "../../../contexts/AuthContext";
+import { RoleTypes } from "../../../types/Role";
 
 function WelcomeBack() {
   const { user } = useAuth();
@@ -32,16 +33,18 @@ function WelcomeBack() {
         >
           Explore Services
         </Button>
-        <Button
-          bgColor={theme.palette.primary.light}
-          color={theme.palette.secondary.main}
-          el="link"
-          hoverBgColor={theme.palette.secondary.main}
-          hoverColor="#000"
-          href="/appointments"
-        >
-          Make Appointment
-        </Button>
+        {user?.role === RoleTypes.User && (
+          <Button
+            bgColor={theme.palette.primary.light}
+            color={theme.palette.secondary.main}
+            el="link"
+            hoverBgColor={theme.palette.secondary.main}
+            hoverColor="#000"
+            href="/appointments"
+          >
+            Make Appointment
+          </Button>
+        )}
       </Box>
     </Section>
   );

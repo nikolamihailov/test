@@ -5,9 +5,15 @@ type SelectProps = {
   itemsPerPage: number;
   onItemsPerPageChange: (value: number) => void;
   itemName: string;
+  selectOptionsNumbers?: number[];
 };
 
-function SelectItemsPerPage({ itemsPerPage, onItemsPerPageChange, itemName }: SelectProps) {
+function SelectItemsPerPage({
+  itemsPerPage,
+  onItemsPerPageChange,
+  itemName,
+  selectOptionsNumbers = [6, 12, 18, 24],
+}: SelectProps) {
   const theme = useTheme();
 
   const handleItemsPerPageChange = (event: SelectChangeEvent<number>) => {
@@ -28,10 +34,11 @@ function SelectItemsPerPage({ itemsPerPage, onItemsPerPageChange, itemName }: Se
           inputProps={{ "aria-label": `${itemName} per page` }}
           sx={selectSx(theme)}
         >
-          <MenuItem value={6}>6</MenuItem>
-          <MenuItem value={12}>12</MenuItem>
-          <MenuItem value={18}>18</MenuItem>
-          <MenuItem value={24}>24</MenuItem>
+          {selectOptionsNumbers.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
         </Select>
       </Box>
     </>

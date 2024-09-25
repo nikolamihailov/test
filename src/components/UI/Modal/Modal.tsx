@@ -8,18 +8,23 @@ type ModalProps = {
   handleClose: () => void;
   title: string;
   children: ReactNode;
+  maxWidth?: string | number;
 };
 
-function Modal({ open, handleClose, title, children }: ModalProps) {
+function Modal({ open, handleClose, title, children, maxWidth }: ModalProps) {
   const theme = useTheme();
+
   return (
     <Dialog
       open={open}
       onClose={handleClose}
       PaperProps={{
-        sx: modalSX(theme),
+        sx: {
+          ...modalSX(theme),
+          maxWidth: maxWidth || "60rem",
+          width: "100%",
+        },
       }}
-      aria-hidden={false}
     >
       {title && (
         <DialogTitle sx={dialogTitleSx}>
