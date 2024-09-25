@@ -68,7 +68,7 @@ function ProfileSection() {
           component="p"
           sx={{ fontWeight: 600, color: theme.palette.primary.main }}
         >
-          {data?.firstName} {data?.lastName}
+          {`${data?.firstName} ${data?.lastName}`}
         </Typography>
 
         <List sx={userItemListSx}>
