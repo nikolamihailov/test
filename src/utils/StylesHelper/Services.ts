@@ -1,4 +1,5 @@
-import { SxProps, Theme } from "@mui/material";
+import { Button, SxProps, Theme } from "@mui/material";
+import { Box, styled } from "@mui/system";
 import { CSSProperties } from "react";
 
 export const serviceSectionStyles = (theme: Theme): CSSProperties => ({
@@ -198,3 +199,30 @@ export const servicePageSectionBtnSx = (theme: Theme): SxProps => ({
     backgroundColor: theme.palette.primary.light,
   },
 });
+
+////////////////////////////////////////////////////////////////
+/* Staff Members  */
+export const ContainerStaffMember = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.secondary.main,
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.6rem",
+  fontSize: "2rem",
+  borderRadius: "1.2rem",
+  alignItems: "center",
+  textAlign: "center",
+  width: "20rem",
+  padding: "3.2rem",
+  justifyContent: "space-between",
+}));
+
+export const Avatar = styled(Box)(() => ({
+  "& img": {
+    width: "8rem",
+  },
+}));
+
+export const BookButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.light,
+  color: theme.palette.secondary.main,
+}));
