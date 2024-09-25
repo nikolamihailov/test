@@ -185,8 +185,8 @@ export const servicePageSectionSx = {
 };
 
 export const servicePageSectionBtnSx = (theme: Theme): SxProps => ({
-  position: "absolute",
-  top: "3rem",
+  position: "fixed",
+  top: "12rem",
   left: "1.5rem",
   padding: "2.4rem",
   minWidth: "0",
@@ -213,7 +213,7 @@ export const ContainerStaffMember = styled(Box)(({ theme }) => ({
   textAlign: "center",
   width: "20rem",
   padding: "3.2rem",
-  justifyContent: "space-between",
+  justifyContent: "space-evenly",
 }));
 
 export const Avatar = styled(Box)(() => ({
