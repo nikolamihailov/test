@@ -66,6 +66,8 @@ export const serviceItemImgSx: SxProps = {
 };
 
 export const servicePageImgSx: SxProps = {
+  position: "sticky",
+  top: "10rem",
   width: {
     xs: "25rem",
     sm: "30rem",
