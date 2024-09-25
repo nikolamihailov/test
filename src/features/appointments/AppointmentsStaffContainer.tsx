@@ -6,8 +6,10 @@ import Spinner from "../../components/Spinner/Spinner";
 import { toast } from "react-toastify";
 import AppointmentItemStaff from "./AppointmentItemStaff";
 import { AppointmentsGrid } from "../../utils/StylesHelper/Appointment";
+import { useState } from "react";
 
 function AppointmentsStaffContainer() {
+  const [selectedAppointmentId, setSelectedAppointmetId] = useState<number | null>(null);
   const { user, logoutExpiredSession } = useAuth();
   const { data: appointments, isLoading, error, refetch } = useAppointmentsStaff(user?.id);
   const { mutateAsync, isPending } = useCancelAppointmentMutation();
@@ -27,6 +29,10 @@ function AppointmentsStaffContainer() {
       });
   };
 
+  const changeSelectedAppointmentId = (id: number | null) => {
+    setSelectedAppointmetId(id);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -37,12 +43,13 @@ function AppointmentsStaffContainer() {
 
   return (
     <AppointmentsGrid>
-      {appointments?.map((a) => (
+      {appointments?.map((appointment) => (
         <AppointmentItemStaff
-          key={a.id}
-          appointment={a}
+          key={appointment.id}
+          appointment={appointment}
           handleCancelAppointment={handleCancelAppointment}
-          pending={isPending}
+          pending={isPending && selectedAppointmentId === appointment.id}
+          changeSelectedAppointmentId={changeSelectedAppointmentId}
         />
       ))}
       {appointments?.length === 0 && <Box>You do not have any appointments yet.</Box>}

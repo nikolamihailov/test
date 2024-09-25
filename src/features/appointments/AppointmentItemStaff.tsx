@@ -4,20 +4,25 @@ import { Appointment } from "../../types/Appointment";
 import dayjs from "dayjs";
 import { Status } from "../../types/Status";
 import { AppointmentCard, InfoRow } from "../../utils/StylesHelper/Appointment";
+import { useCallback } from "react";
 
 type AppointmentItemStaffProps = {
   appointment: Appointment;
   handleCancelAppointment: (id: number) => void;
   pending: boolean;
+  changeSelectedAppointmentId: (id: number | null) => void;
 };
-
-// Styled component for the appointment card
 
 function AppointmentItemStaff({
   appointment,
   handleCancelAppointment,
   pending,
+  changeSelectedAppointmentId,
 }: AppointmentItemStaffProps) {
+  const handleBtnClick = useCallback(() => {
+    handleCancelAppointment(appointment.id);
+    changeSelectedAppointmentId(appointment.id);
+  }, [appointment.id, changeSelectedAppointmentId, handleCancelAppointment]);
   return (
     <AppointmentCard>
       <InfoRow>
@@ -42,11 +47,7 @@ function AppointmentItemStaff({
       <Typography>Status: {appointment.status}</Typography>
 
       {appointment.status !== Status.Canceled && (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleCancelAppointment(appointment.id)}
-        >
+        <Button variant="contained" color="primary" onClick={() => handleBtnClick()}>
           {pending ? <CircularProgress size={24} color="inherit" /> : "Cancel"}
         </Button>
       )}
