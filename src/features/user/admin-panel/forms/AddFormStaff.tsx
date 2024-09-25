@@ -86,7 +86,7 @@ function AddFormStaff({ handleClose, refetch }: AddFormStaffProps) {
     setSelectedServices(updatedServices);
     setValue("serviceIds", updatedServices);
 
-    if (updatedServices.length > 0) {
+    if (updatedServices.length) {
       clearErrors("serviceIds");
     }
   };

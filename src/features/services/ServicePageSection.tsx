@@ -96,7 +96,7 @@ function ServicePageSection({ id }: ServicePageSectionProps) {
               }}
             >
               <Typography variant="h4" sx={{ fontSize: "2.1rem" }}>
-                {data.users.length >= 1 && "Specialists:"}
+                {data.users.length && "Specialists:"}
               </Typography>
               <Box
                 sx={{
@@ -106,11 +106,11 @@ function ServicePageSection({ id }: ServicePageSectionProps) {
                   margin: "0 auto",
                 }}
               >
-                {data?.users.map((u) => {
+                {data?.users.map((user) => {
                   return (
                     <ServiceStaffMember
-                      key={u.email}
-                      staff={u}
+                      key={user.email}
+                      staff={user}
                       openModal={() => setIsOpen(true)}
                       changeSelectedStaff={changeSelectedStaff}
                     />

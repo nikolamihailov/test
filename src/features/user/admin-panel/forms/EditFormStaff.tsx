@@ -98,7 +98,7 @@ function EditFormStaff({ id, handleClose, onSubmit }: EditFormStaffProps) {
     setSelectedServices(updatedServices);
     setValue("serviceIds", updatedServices);
 
-    if (updatedServices.length > 0) {
+    if (updatedServices.length) {
       clearErrors("serviceIds");
     }
   };
