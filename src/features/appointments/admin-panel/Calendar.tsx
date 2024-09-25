@@ -1,7 +1,7 @@
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import { useTheme } from "@mui/material";
-import CustomToolbar from "../CalendartToolBar";
+import CustomToolbar from "../CalendarToolBar";
 import { AppointmentEvent } from "../../../types/Appointment";
 import { Status } from "../../../types/Status";
 
