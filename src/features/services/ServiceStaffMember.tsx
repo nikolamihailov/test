@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { RoleTypes } from "../../types/Role";
 import { Avatar, BookButton, ContainerStaffMember } from "../../utils/StylesHelper/Services";
+import { useNavigate } from "react-router-dom";
 
 type ServiceStaffMembersProps = {
   staff: UserWithRole;
@@ -12,10 +13,9 @@ type ServiceStaffMembersProps = {
   changeSelectedStaff: (staff: UserWithRole) => void;
 };
 
-// Styled components
-
 function ServiceStaffMember({ staff, openModal, changeSelectedStaff }: ServiceStaffMembersProps) {
   const { user } = useAuth();
+  const navigateTo = useNavigate();
 
   const openBookForm = useCallback(() => {
     openModal();
@@ -27,12 +27,16 @@ function ServiceStaffMember({ staff, openModal, changeSelectedStaff }: ServiceSt
       <Avatar>
         <img src={staffAvatar} alt={"avatar"} />
       </Avatar>
-      <Box sx={{ wordBreak: "break-word", whiteSpace: "normal" }}>
+      <Box sx={{ wordBreak: "break-word", whiteSpace: "break-spaces" }}>
         <h3>
-          {staff.firstName} {staff.lastName}
+          <p>{staff.firstName}</p>
+          <p>{staff.lastName}</p>
         </h3>
       </Box>
       {user?.role === RoleTypes.User && <BookButton onClick={openBookForm}>Book</BookButton>}
+      {user?.email === staff.email && (
+        <BookButton onClick={() => navigateTo("/appointments")}>Appointments</BookButton>
+      )}
     </ContainerStaffMember>
   );
 }
