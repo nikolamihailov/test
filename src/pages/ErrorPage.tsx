@@ -14,14 +14,7 @@ function ErrorPage() {
     <Section bgColor={theme.palette.secondary.dark} style={errorPageStyles(theme)}>
       <h1 className="heading-primary">Looks Like We're Lost!</h1>
       <img src={errorImg} alt="sad face" style={{ width: "30rem" }} />
-      <Button
-        bgColor={theme.palette.primary.light}
-        color={theme.palette.secondary.main}
-        el="link"
-        hoverBgColor={theme.palette.secondary.main}
-        hoverColor="#000"
-        href="/home"
-      >
+      <Button variant="secondary" el="link" href="/home">
         Go Home
       </Button>
     </Section>
