@@ -4,6 +4,7 @@ import Button from "../../UI/Button/Button";
 import { welcomeSection } from "../../../utils/StylesHelper/Section";
 import { callToActionBtns } from "../../../utils/StylesHelper/WelcomeBack";
 import { useAuth } from "../../../contexts/AuthContext";
+import { RoleTypes } from "../../../types/Role";
 
 function WelcomeBack() {
   const { user } = useAuth();
@@ -22,26 +23,14 @@ function WelcomeBack() {
         Ready for your next wellness journey? Let’s get started.
       </Typography>
       <Box sx={callToActionBtns}>
-        <Button
-          bgColor={theme.palette.primary.main}
-          color={theme.palette.secondary.main}
-          el="link"
-          hoverBgColor={theme.palette.secondary.main}
-          hoverColor="#000"
-          href="/services"
-        >
+        <Button variant="primary" el="link" href="/services">
           Explore Services
         </Button>
-        <Button
-          bgColor={theme.palette.primary.light}
-          color={theme.palette.secondary.main}
-          el="link"
-          hoverBgColor={theme.palette.secondary.main}
-          hoverColor="#000"
-          href="/appointments"
-        >
-          Make Appointment
-        </Button>
+        {user?.role === RoleTypes.User && (
+          <Button variant="secondary" el="link" href="/appointments">
+            Make Appointment
+          </Button>
+        )}
       </Box>
     </Section>
   );

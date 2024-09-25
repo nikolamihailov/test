@@ -14,29 +14,41 @@ function AdminNavigation() {
     <>
       <Box component="nav" sx={{ padding: 1.5, bgcolor: theme.palette.primary.main }}>
         {isMdUp && (
-          <ul className={styles["main-nav"]}>
-            <li>
-              <NavLink
-                to="/admin-panel/services"
-                className={({ isActive }) => (isActive ? styles["active"] : "")}
-              >
-                Services
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/home"}>
-                <Logo src={logo} width={60} />
-              </NavLink>
-            </li>
+          <ul className={styles["admin-nav"]}>
+            <Box>
+              <li>
+                <NavLink to={"/home"}>
+                  <Logo src={logo} width={60} />
+                </NavLink>
+              </li>
+            </Box>
+            <Box sx={{ display: "flex", gap: "3.2rem" }}>
+              <li>
+                <NavLink
+                  to="/admin-panel/services"
+                  className={({ isActive }) => (isActive ? styles["active"] : "")}
+                >
+                  Services
+                </NavLink>
+              </li>
 
-            <li>
-              <NavLink
-                to="/admin-panel/users"
-                className={({ isActive }) => (isActive ? styles["active"] : "")}
-              >
-                Users
-              </NavLink>
-            </li>
+              <li>
+                <NavLink
+                  to="/admin-panel/users"
+                  className={({ isActive }) => (isActive ? styles["active"] : "")}
+                >
+                  Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin-panel/appointments"
+                  className={({ isActive }) => (isActive ? styles["active"] : "")}
+                >
+                  Appointments
+                </NavLink>
+              </li>
+            </Box>
           </ul>
         )}
         {!isMdUp && <MobileNavAdmin />}

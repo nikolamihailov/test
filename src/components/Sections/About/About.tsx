@@ -42,15 +42,7 @@ function AboutSection() {
         </Box>
       </Box>
       <Box>
-        <Button
-          bgColor={theme.palette.primary.main}
-          color={theme.palette.secondary.main}
-          el="link"
-          hoverBgColor={theme.palette.secondary.main}
-          hoverColor="#000"
-          href="/services"
-          style={btnStyles}
-        >
+        <Button variant="primary" el="link" href="/services" style={btnStyles}>
           Explore Services <ArrowRightAltIcon />
         </Button>
       </Box>

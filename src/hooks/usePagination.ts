@@ -31,7 +31,9 @@ export const usePagination = (initialPage: number = 0, initialItemsPerPage: numb
 
   useEffect(() => {
     const pageFromParams = parseInt(searchParams.get("page") ?? "0");
-    const itemsPerPageFromParams = parseInt(searchParams.get("items") ?? "6");
+    const itemsPerPageFromParams = parseInt(
+      searchParams.get("items") ?? String(initialItemsPerPage)
+    );
 
     setPage(pageFromParams);
     setItemsPerPage(itemsPerPageFromParams);

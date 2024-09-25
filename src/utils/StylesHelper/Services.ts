@@ -1,4 +1,5 @@
-import { SxProps, Theme } from "@mui/material";
+import { Button, SxProps, Theme } from "@mui/material";
+import { Box, styled } from "@mui/system";
 import { CSSProperties } from "react";
 
 export const serviceSectionStyles = (theme: Theme): CSSProperties => ({
@@ -66,6 +67,8 @@ export const serviceItemImgSx: SxProps = {
 };
 
 export const servicePageImgSx: SxProps = {
+  position: "sticky",
+  top: "10rem",
   width: {
     xs: "25rem",
     sm: "30rem",
@@ -182,8 +185,8 @@ export const servicePageSectionSx = {
 };
 
 export const servicePageSectionBtnSx = (theme: Theme): SxProps => ({
-  position: "absolute",
-  top: "3rem",
+  position: "fixed",
+  top: "12rem",
   left: "1.5rem",
   padding: "2.4rem",
   minWidth: "0",
@@ -196,3 +199,30 @@ export const servicePageSectionBtnSx = (theme: Theme): SxProps => ({
     backgroundColor: theme.palette.primary.light,
   },
 });
+
+////////////////////////////////////////////////////////////////
+/* Staff Members  */
+export const ContainerStaffMember = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.secondary.main,
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.6rem",
+  fontSize: "2rem",
+  borderRadius: "1.2rem",
+  alignItems: "center",
+  textAlign: "center",
+  width: "20rem",
+  padding: "3.2rem",
+  justifyContent: "space-evenly",
+}));
+
+export const Avatar = styled(Box)(() => ({
+  "& img": {
+    width: "8rem",
+  },
+}));
+
+export const BookButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.light,
+  color: theme.palette.secondary.main,
+}));

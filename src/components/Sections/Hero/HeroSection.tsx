@@ -19,24 +19,10 @@ function HeroSection() {
             wellness with our personalized treatments and fitness programs.
           </p>
           <Box>
-            <Button
-              bgColor={theme.palette.primary.main}
-              color={theme.palette.secondary.main}
-              el="link"
-              hoverBgColor={theme.palette.secondary.main}
-              hoverColor="#000"
-              href="/services"
-            >
+            <Button variant="primary" el="link" href="/services">
               Explore Services
             </Button>
-            <Button
-              bgColor={theme.palette.primary.light}
-              color={theme.palette.secondary.main}
-              el="link"
-              hoverBgColor={theme.palette.secondary.main}
-              hoverColor="#000"
-              href="/appointments"
-            >
+            <Button variant="secondary" el="link" href="/appointments">
               Make Appointment
             </Button>
           </Box>

@@ -37,6 +37,7 @@ function EditFormStaff({ id, handleClose, onSubmit }: EditFormStaffProps) {
     handleSubmit,
     formState: { errors },
     setValue,
+    clearErrors,
   } = useForm<UserFormFields>({
     defaultValues: {
       email: "",
@@ -82,16 +83,24 @@ function EditFormStaff({ id, handleClose, onSubmit }: EditFormStaffProps) {
     const {
       target: { value },
     } = event;
-    setSelectedServices(value as number[]);
-    setValue("serviceIds", value as number[]);
+    const selectedValue = value as number[];
+
+    setSelectedServices(selectedValue);
+    setValue("serviceIds", selectedValue);
+
+    if (selectedValue.length > 0) {
+      clearErrors("serviceIds");
+    }
   };
 
   const handleDeleteSelectedService = (serviceId: number) => {
-    setSelectedServices(selectedServices.filter((item) => item !== serviceId));
-    setValue(
-      "serviceIds",
-      selectedServices.filter((item) => item !== serviceId)
-    );
+    const updatedServices = selectedServices.filter((item) => item !== serviceId);
+    setSelectedServices(updatedServices);
+    setValue("serviceIds", updatedServices);
+
+    if (updatedServices.length) {
+      clearErrors("serviceIds");
+    }
   };
 
   if (isLoading) {
@@ -202,7 +211,7 @@ function EditFormStaff({ id, handleClose, onSubmit }: EditFormStaffProps) {
           error={!!errors.serviceIds}
           value={selectedServices}
           onChange={handleServiceChange}
-          input={<OutlinedInput label="Services" />}
+          input={<OutlinedInput label="Services" aria-hidden={false} />}
           renderValue={(selected) => (
             <Stack gap={1} direction="row" flexWrap="wrap">
               {selected.map((serviceId) => {

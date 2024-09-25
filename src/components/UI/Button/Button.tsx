@@ -1,42 +1,56 @@
 import { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "@mui/material/styles"; // Import MUI theme
 import stylesBtn from "./Button.module.css";
 
 type ButtonProps = {
   el: "button";
+  variant?: "primary" | "secondary";
   type?: "small" | "medium" | "large";
-  bgColor: string;
-  color: string;
-  hoverBgColor?: string;
-  hoverColor?: string;
   onClickFunc?: () => void;
   children: ReactNode;
 } & ComponentPropsWithoutRef<"button">;
 
-type LinksProps = {
+type LinkProps = {
   el: "link";
+  variant?: "primary" | "secondary";
   type?: "small" | "medium";
-  bgColor: string;
-  color: string;
-  hoverBgColor?: string;
-  hoverColor?: string;
   href: string;
   children: ReactNode;
   style?: CSSProperties;
 } & ComponentPropsWithoutRef<"a">;
 
-function Button(props: ButtonProps | LinksProps) {
-  const { el, type, bgColor, color, children, hoverBgColor, hoverColor, style, ...otherProps } =
-    props;
+function Button(props: ButtonProps | LinkProps) {
+  const { el, variant = "primary", type = "small", children, style, ...otherProps } = props;
+
+  const theme = useTheme();
+
+  const variantStyles = {
+    primary: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
+      hoverBgColor: theme.palette.secondary.main,
+      hoverColor: "#000",
+    },
+    secondary: {
+      backgroundColor: theme.palette.primary.light,
+      color: theme.palette.secondary.main,
+      hoverBgColor: theme.palette.secondary.main,
+      hoverColor: "#000",
+    },
+  };
+
+  const { backgroundColor, color, hoverBgColor, hoverColor } = variantStyles[variant];
 
   const styles = {
-    backgroundColor: bgColor,
-    color: color,
+    backgroundColor,
+    color,
     ...style,
   };
 
-  const className = `${stylesBtn["btn-link"]} ${stylesBtn[type ? type : "small"]}`;
+  const className = `${stylesBtn["btn-link"]} ${stylesBtn[type]}`;
 
+  // Mouse enter and leave handlers for hover styles
   const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.currentTarget;
     if (hoverBgColor) target.style.backgroundColor = hoverBgColor;
@@ -45,47 +59,46 @@ function Button(props: ButtonProps | LinksProps) {
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.currentTarget;
-    target.style.backgroundColor = bgColor;
+    target.style.backgroundColor = backgroundColor;
     target.style.color = color;
   };
 
-  if (el === "link" && props.href.includes("#")) {
-    return (
+  // Handle link elements
+  if (el === "link") {
+    return props.href?.includes("#") ? (
       <a
         style={styles}
         className={className}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        {...(otherProps as LinksProps)}
+        {...(otherProps as LinkProps)}
+        href={props.href}
       >
         {children}
       </a>
-    );
-  }
-
-  if (el === "link") {
-    return (
+    ) : (
       <Link
         style={styles}
         className={className}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         to={props.href}
-        {...(otherProps as LinksProps)}
+        {...(otherProps as LinkProps)}
       >
         {children}
       </Link>
     );
   }
 
+  // Handle button elements
   return (
     <button
       style={styles}
       className={className}
-      {...(otherProps as ButtonProps)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={props.onClickFunc}
+      onClick={props.onClickFunc} // Manually handle onClickFunc
+      {...(otherProps as ButtonProps)}
     >
       {children}
     </button>

@@ -40,6 +40,7 @@ function AddFormStaff({ handleClose, refetch }: AddFormStaffProps) {
     handleSubmit,
     formState: { errors },
     setValue,
+    clearErrors,
   } = useForm<AddStaffFormField>({
     defaultValues: {
       email: "",
@@ -70,8 +71,24 @@ function AddFormStaff({ handleClose, refetch }: AddFormStaffProps) {
     const {
       target: { value },
     } = event;
-    setSelectedServices(value as number[]);
-    setValue("serviceIds", value as number[]);
+    const selectedValue = value as number[];
+
+    setSelectedServices(selectedValue);
+    setValue("serviceIds", selectedValue);
+
+    if (selectedValue.length > 0) {
+      clearErrors("serviceIds");
+    }
+  };
+
+  const handleDeleteSelectedService = (serviceId: number) => {
+    const updatedServices = selectedServices.filter((item) => item !== serviceId);
+    setSelectedServices(updatedServices);
+    setValue("serviceIds", updatedServices);
+
+    if (updatedServices.length) {
+      clearErrors("serviceIds");
+    }
   };
 
   const onSubmit = async (userData: AddStaffFormField) => {
@@ -261,9 +278,7 @@ function AddFormStaff({ handleClose, refetch }: AddFormStaffProps) {
                   <Chip
                     key={serviceId}
                     label={serviceName}
-                    onDelete={() =>
-                      setSelectedServices(selectedServices.filter((item) => item !== serviceId))
-                    }
+                    onDelete={() => handleDeleteSelectedService(serviceId)}
                     deleteIcon={<CancelIcon onMouseDown={(event) => event.stopPropagation()} />}
                   />
                 );
