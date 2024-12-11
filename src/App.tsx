@@ -8,6 +8,7 @@ import generateCssVariables from "./utils/ThemeColors/generateColors";
 import ScrollTop from "./components/UI/ScrollToTop/ScrollToTop";
 
 const queryClient = new QueryClient();
+/* svetli */
 
 const theme = createTheme({
   typography: {
